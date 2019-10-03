@@ -1,12 +1,22 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import './app.scss';
 
 const App: React.FC = () => {
+  const hello = {
+    sda: 123,
+    asda: 214,
+  };
+
+  console.log(hello);
+
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
+        <img
+          src="https://designshop-6aa0.kxcdn.com/photos/hello-cartoons-comic-send-greeting-card-online-2526_2.jpg"
+          className="App-logo"
+          alt="logo"
+        />
         <p>
           Edit <code>src/App.tsx</code> and save to reload.
         </p>
@@ -21,6 +31,6 @@ const App: React.FC = () => {
       </header>
     </div>
   );
-}
+};
 
 export default App;
