@@ -22,7 +22,9 @@
       1,
       { "extensions": [".js", ".jsx", ".ts", ".tsx"] }
     ],
-    "react/jsx-one-expression-per-line": [0, { "allow": "none" }],
+    "react/jsx-max-props-per-line": [2, { "maximum": 1, "when": "always" }],
+    "react/jsx-first-prop-new-line": [2, "never"],
+    "react/jsx-indent": [2, 2],
     "comma-dangle": [
       "error",
       {
@@ -31,6 +33,12 @@
         "functions": "ignore",
         "imports": "always-multiline",
         "objects": "always-multiline"
+      }
+    ],
+    "jsx-a11y/label-has-associated-control": [
+      2,
+      {
+        "controlComponents": ["both"]
       }
     ]
   },

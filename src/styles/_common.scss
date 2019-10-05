@@ -1,0 +1,7 @@
+@import "variables";
+
+.container {
+    margin:    0 auto;
+    max-width: $container-max-width;
+    width:     calc(100% - #{$body-indent});
+}
