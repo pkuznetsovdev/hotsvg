@@ -1,5 +1,5 @@
 import actionTypes from './actionTypes';
-import { UploadedState } from '../interfaces/';
+import { IUploadedState } from '../interfaces/';
 
 const uploadStarted = () => ({
   type: actionTypes.onUploadStart,
@@ -19,7 +19,7 @@ const uploadFail = (error: string) => {
   };
 };
 
-const loadData = (e: React.FormEvent<HTMLInputElement>, state?: UploadedState) => (dispatch: any) => {
+const loadData = (e: React.FormEvent<HTMLInputElement>, state?: IUploadedState) => (dispatch: any) => {
   dispatch(uploadStarted());
 
   const target = e.target as HTMLInputElement;

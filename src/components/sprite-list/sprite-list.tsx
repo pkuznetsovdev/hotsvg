@@ -13,7 +13,8 @@ interface Text {
 
 const SpriteList: React.FC<ISpriteList> = ({spriteArray}) => {
 
-  const spriteItems = spriteArray.map( ({title}, idx) => <SpriteListItem key={idx} text={title} />);
+  const spriteItems = spriteArray.map( ({title}, idx) => <SpriteListItem key={idx}
+text={title} />);
 
   return (
     <main className="container">

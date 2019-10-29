@@ -9,7 +9,7 @@ const initialState: State = {
   }
 };
 
-const rootReducer = (state = initialState, action: Action) => ({
+const rootReducer = (state: State = initialState, action: Action) => ({
   uploadedData: updateLoadedData(state.uploadedData, action)
 });
 

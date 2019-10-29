@@ -1,4 +1,4 @@
-import State, {UploadedState, IUploadedFiles} from './state';
+import State, {IUploadedState, IUploadedFiles} from './state';
 import Action from './action';
 
 
@@ -6,7 +6,7 @@ export {
 // @ts-ignore
   State,
 // @ts-ignore
-  UploadedState,
+  IUploadedState,
 // @ts-ignore
   Action,
 // @ts-ignore

@@ -1,5 +1,5 @@
 import actionTypes from '../actions/actionTypes';
-import { Action, UploadedState } from '../interfaces';
+import { Action, IUploadedState } from '../interfaces';
 
 const initialState = {
   uploadedFiles: [],
@@ -7,7 +7,7 @@ const initialState = {
   error: null,
 };
 
-const updateLoadedData = (uploadedData: UploadedState, action: Action) => {
+const updateLoadedData = (uploadedData: IUploadedState, action: Action) => {
   if (uploadedData === undefined) {
     return {
       ...initialState
