@@ -5,12 +5,12 @@ import './app.scss';
 
 /*  Components  */
 import Header from '../header';
-import GeneratedSpriteList from '../../containers/generated-sprite-list';
+import UploadedSpriteList from '../../containers/uploaded-sprite-list';
 
 const App: React.FC = () => (
   <div className="app">
     <Header />
-    <GeneratedSpriteList />
+    <UploadedSpriteList />
   </div>
 );
 

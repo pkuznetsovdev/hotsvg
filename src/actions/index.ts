@@ -19,7 +19,12 @@ const uploadFail = (error: string): Action => {
 
 const loadData = (newFiles: IUploadedFiles) => (dispatch: any) => {
   dispatch(uploadStarted());
-  dispatch(uploadSuccess(newFiles));
+
+  if (newFiles) {
+    dispatch(uploadSuccess(newFiles));
+  } else {
+    uploadFail('No files, common..')
+  }
 };
 
 export {

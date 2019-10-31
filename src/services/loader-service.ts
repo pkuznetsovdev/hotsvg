@@ -1,14 +1,24 @@
-export default class loadDataService {
-  getDataOnInputChange() {
+import { IUploadedFiles } from '../interfaces';
+import store from '../store';
+import { loadData } from '../actions';
 
+const onUploadData = (newFiles: IUploadedFiles) => {
+  const {uploadedFiles} = store.getState().uploadedData;
+  newFiles = filterNewFilesOnUpload(uploadedFiles, newFiles);
+  /**Todo: prevent passing dispatch here, looks ugly*/
+  if (newFiles.length) {
+    loadData(newFiles)(store.dispatch);
   }
+};
 
-  static getSpriteFromInput(fileList: any) {
-    const length = fileList.length;
-    const spriteArr = [];
+const filterNewFilesOnUpload = (oldFilesArr: File[], NewFilesArr: File[]) => {
+  return NewFilesArr.filter(newFile => {
+    return !oldFilesArr.some(oldFile => {
+      return oldFile.name === newFile.name || oldFile.lastModified === newFile.lastModified
+    });
+  })
+};
 
-    for (let i = 0; i < length; i++) {
-      spriteArr.push(fileList[i])
-    }
-  }
+export {
+  onUploadData
 }

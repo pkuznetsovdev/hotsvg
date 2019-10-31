@@ -19,6 +19,7 @@ const updateLoadedData = (uploadedData: IUploadedState, action: Action) => {
       return {
         ...uploadedData,
         loading: true,
+        error: null
       };
     case actionTypes.onUploadSuccess :
       return {

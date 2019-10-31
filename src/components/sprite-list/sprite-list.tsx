@@ -4,17 +4,24 @@ import React from 'react';
 import './sprite-list.module.scss';
 
 interface ISpriteList {
-  spriteArray: {title: string}[]
+  spriteArray: ISpriteListItem[]
 }
+interface IMySpriteList {
+  spriteArray: IMySpriteListItem[]
+}
+
+type ISpriteListItem = {title: string};
+type IMySpriteListItem = {spriteFile: string, title: string};
 
 interface Text {
   text?: number|string
 }
 
-const SpriteList: React.FC<ISpriteList> = ({spriteArray}) => {
+const SpriteList = ({spriteArray}: IMySpriteList) => {
 
-  const spriteItems = spriteArray.map( ({title}, idx) => <SpriteListItem key={idx}
-text={title} />);
+  const spriteItems = spriteArray.map( ({title}, idx: number) => {
+    return <SpriteListItem key={idx} text={title} />
+  });
 
   return (
     <main className="container">
@@ -32,3 +39,4 @@ const SpriteListItem: React.FC<Text> = (props) => {
     <li>{props.text || '1111'}</li>
   );
 };
+

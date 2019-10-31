@@ -1,5 +1,5 @@
-import uploadedSpritesSelector from './uploadedSpritesSelector'
+import uploadedFilesSelector from './uploadedFilesSelector'
 
 export {
-  uploadedSpritesSelector
+  uploadedFilesSelector
 };
