@@ -26,7 +26,7 @@ class UploadedSpriteList extends Component<IProps, ILocalState> {
   componentDidMount() {
     this.onFilesLoaded()
       .then((res: ISpriteList) => {
-        this.setState({ uploadedFiles: res });
+        this.setState({ uploadedFiles: res }, () => console.log(this.state));
       });
   }
 
@@ -34,18 +34,14 @@ class UploadedSpriteList extends Component<IProps, ILocalState> {
     return await extractDataFromSprite(this.props.uploadedFiles);
   };
 
-  /*shouldComponentUpdate(nextProps: Readonly<IProps>, nextState: Readonly<ILocalState>, nextContext: any): boolean {
-    if (this.state.uploadedFiles !== nextProps.uploadedFiles) {
-      this.onFilesLoaded()
-        .then((spriteList: ISpriteList) => {
-          this.setState({ uploadedFiles: spriteList });
-        });
-      return true;
-    }
-    return false;
-  }*/
-
   render() {
+    if (this.state.uploadedFiles !== this.props.uploadedFiles) {
+      this.onFilesLoaded()
+        .then((res: ISpriteList) => {
+          this.setState({ uploadedFiles: res }, () => console.log(this.state));
+        });
+    }
+
     return <SpriteList spriteArray={this.state.uploadedFiles} />;
   }
 }
