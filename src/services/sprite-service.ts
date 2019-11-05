@@ -1,15 +1,15 @@
-import { ISpriteListItem } from '../interfaces';
+import { ISymbol } from '../interfaces';
 
-function getSVGSymbols({spriteFile, title}: ISpriteListItem) {
+function getSVGSymbols(spriteFile: string) {
   const symbolArray = spriteFile.match(/<symbol.*?<\/symbol>/gmis);
   if (symbolArray === null) {
-      return {symbol: spriteFile.match(/<svg.*?<\/svg>/gmis)![0], title};
+      return {svg: spriteFile.match(/<svg.*?<\/svg>/gmis)![0]};
   }
 
-  const symbolList: {}[] = [];
+  const symbolList: ISymbol[] = [];
 
   symbolArray.forEach(svg => {
-    const symbol: {id: string, title: string, viewBox: string} = {id: '', title: '', viewBox: ''};
+    const symbol: ISymbol = {id: '', title: '', viewBox: ''};
 
     symbol.id = svg.match(/<symbol.*id=["'](.*?)["']/i)![1] || '';
     symbol.title = svg.match(/<title>(.*?)<\/title>/i)![1] || '';
@@ -17,7 +17,8 @@ function getSVGSymbols({spriteFile, title}: ISpriteListItem) {
 
     symbolList.push(symbol);
   });
-  return {symbolList, title};
+
+  return symbolList;
 }
 
 export {
