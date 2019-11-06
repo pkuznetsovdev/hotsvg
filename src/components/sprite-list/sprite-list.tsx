@@ -8,19 +8,28 @@ import { getSVGSymbols } from '../../services/sprite-service';
 import SpriteListItem from '../sprite-list-item';
 
 /*  Styles  */
-import './sprite-list.module.scss';
+import './sprite-list.scss';
 
-const SpriteList = ({spriteArray}: ISpriteList) => {
+interface Props {
+  spriteArray: ISpriteList
+}
+
+const SpriteList = ({spriteArray}: Props) => {
   let listCounter = 0;
 
-  const spriteLists = spriteArray.map( ({title, spriteFile}, idx) => {
+  const spriteLists = spriteArray.map( ({title, spriteFile}) => {
     const symbolList = getSVGSymbols(spriteFile);
     let spriteItems;
 
+    const parser = new DOMParser();
+    const spriteElement = parser.parseFromString(spriteFile, "text/xml");
+    spriteElement.documentElement.style.display = 'none';
+    document.body.insertAdjacentElement('afterbegin', spriteElement.documentElement);
+
     if (Array.isArray(symbolList)) {
       let itemCounter = 0;
-      spriteItems = symbolList.map( ({id, title, viewBox}: ISymbol) => {
-        return <SpriteListItem key={itemCounter++} id={id} title={title} viewBox={viewBox}/>
+      spriteItems = symbolList.map( (symbol: ISymbol) => {
+        return <SpriteListItem key={itemCounter++} symbol={symbol} />
       });
     } else {
       spriteItems = <li>{symbolList.svg}</li>;
@@ -28,7 +37,7 @@ const SpriteList = ({spriteArray}: ISpriteList) => {
 
     return (
       <ul className="sprite-list" key={listCounter++}>
-        <li key={0}><h3>{title}</h3></li>
+        <li key={0} className="sprite-list__title"><h3>{title}</h3></li>
         {spriteItems}
       </ul>
     )

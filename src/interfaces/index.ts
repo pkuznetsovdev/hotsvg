@@ -1,7 +1,6 @@
 import State, {IUploadedState, IUploadedFiles} from './state';
 import Action from './action';
-import ISpriteList, {ISpriteListItem, ISymbol} from './sprite';
-
+import {ISpriteListItem, ISymbol, ISpriteList, ISvg} from './sprite';
 
 export {
 // @ts-ignore
@@ -18,4 +17,6 @@ export {
   ISpriteListItem,
 // @ts-ignore
   ISymbol,
+// @ts-ignore
+  ISvg,
 }

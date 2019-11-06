@@ -1,0 +1,19 @@
+@import '../../styles/variables';
+
+.sprite-list {
+    width:     100%;
+    display:   flex;
+    flex-wrap: wrap;
+
+    &__title {
+        width: 100%;
+        border-bottom: 1px solid $gray;
+    }
+
+    &__item {
+        display:         flex;
+        width:           25%;
+        margin:          1.5em 0;
+        min-width:       250px;
+    }
+}

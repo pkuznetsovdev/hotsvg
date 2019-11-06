@@ -1,8 +1,5 @@
-export type ISpriteListItem = {spriteFile: string, title: string};
-export type ISymbol = {id: string, title: string, viewBox: string};
+export type ISpriteListItem = { spriteFile: string, title: string };
+export type ISymbol = { id: string, title: string, viewBox: string };
+export type ISvg = { svg: string };
 
-interface ISpriteList {
-  spriteArray: ISpriteListItem[]
-}
-
-export default ISpriteList;
+export type ISpriteList = ISpriteListItem[];
