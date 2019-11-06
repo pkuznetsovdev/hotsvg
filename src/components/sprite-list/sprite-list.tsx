@@ -21,11 +21,13 @@ const SpriteList = ({spriteArray}: Props) => {
     const symbolList = getSVGSymbols(spriteFile);
     let spriteItems;
 
+    /*todo bad code*/
     const parser = new DOMParser();
     const spriteElement = parser.parseFromString(spriteFile, "text/xml");
     spriteElement.documentElement.style.display = 'none';
     document.body.insertAdjacentElement('afterbegin', spriteElement.documentElement);
 
+    /*todo bad code*/
     if (Array.isArray(symbolList)) {
       let itemCounter = 0;
       spriteItems = symbolList.map( (symbol: ISymbol) => {

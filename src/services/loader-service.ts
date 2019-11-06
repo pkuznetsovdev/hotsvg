@@ -5,7 +5,7 @@ import { loadData } from '../actions';
 const onUploadData = (newFiles: IUploadedFiles) => {
   const {uploadedFiles} = store.getState().uploadedData;
   newFiles = filterNewFilesOnUpload(uploadedFiles, newFiles);
-  /**Todo: prevent passing dispatch here, looks ugly*/
+  /* todo bad code - no dispatch*/
   if (newFiles.length) {
     loadData(newFiles)(store.dispatch);
   }
@@ -14,7 +14,7 @@ const onUploadData = (newFiles: IUploadedFiles) => {
 const filterNewFilesOnUpload = (oldFilesArr: File[], NewFilesArr: File[]) => {
   return NewFilesArr.filter(newFile => {
     return !oldFilesArr.some(oldFile => {
-      return oldFile.name === newFile.name || oldFile.lastModified === newFile.lastModified
+      return oldFile.name === newFile.name && oldFile.lastModified === newFile.lastModified
     });
   })
 };

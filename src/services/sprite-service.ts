@@ -8,6 +8,7 @@ function getSVGSymbols(spriteFile: string): ISymbol[] | ISvg {
 
   const symbolList: ISymbol[] = [];
 
+  /*todo bad code*/
   symbolArray.forEach(svg => {
     const symbol: ISymbol = {id: '', title: '', viewBox: ''};
     symbol.id = svg.match(/<symbol.*id=["'](.*?)["']/i) ? svg.match(/<symbol.*id=["'](.*?)["']/i)![1] : '';

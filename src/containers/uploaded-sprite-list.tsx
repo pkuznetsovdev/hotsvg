@@ -51,11 +51,6 @@ export default connect(mapStateToProps)(UploadedSpriteList);
       const reader = new FileReader();
       reader.readAsText(file, 'UTF-8');
       reader.onload = () => {
-        const parser = new DOMParser();
-        const result = reader.result as string;
-        const spriteElement = parser.parseFromString(result, 'text/xml');
-        spriteElement.documentElement.style.display = 'none';
-        document.body.insertAdjacentElement('afterbegin', spriteElement.documentElement);
         res({ spriteFile: result, title: file.name });
       };
     });
