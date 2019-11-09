@@ -1,72 +1,53 @@
 import actionTypes from './actionTypes';
-import { IUploadedState } from '../interfaces/';
+import { Action, ISpriteList, IUploadedFiles } from '../interfaces';
+import { extractDataFromSprite } from '../services/sprite-service';
 
-const uploadStarted = () => ({
-  type: actionTypes.onUploadStart,
+/*  Upload  */
+const uploadStarted = (): Action => ({ type: actionTypes.onUploadStart });
+
+const uploadSuccess = (data: IUploadedFiles): Action => ({
+  type: actionTypes.onUploadSuccess,
+  payload: data,
 });
 
-const uploadSuccess = (data: File[]) => {
-  return {
-    type: actionTypes.onUploadSuccess,
-    payload: data,
-  };
-};
+const uploadFail = (error: string): Action => ({
+  type: actionTypes.onUploadFail,
+  payload: error,
+});
 
-const uploadFail = (error: string) => {
-  return {
-    type: actionTypes.onUploadFail,
-    payload: error,
-  };
-};
+/*  Generate Sprites  */
+const generateSpriteFilesStarted = (): Action => ({ type: actionTypes.onUpdateSpriteFilesStart });
 
-const loadData = (e: React.FormEvent<HTMLInputElement>, state?: IUploadedState) => (dispatch: any) => {
+const generateSpriteFilesSuccess = (data: ISpriteList): Action => ({
+  type: actionTypes.onUpdateSpriteFilesSuccess,
+  payload: data,
+});
+
+const generateSpriteFilesFail = (error: string): Action => ({
+  type: actionTypes.onUpdateSpriteFilesFail,
+  payload: error,
+});
+
+/*  Delete Uploaded Data  */
+const deleteUploadedData = (): Action => ({
+  type: actionTypes.onDeleteUploadedData
+});
+
+const loadData = (newFiles: IUploadedFiles) => (dispatch: any) => {
   dispatch(uploadStarted());
 
-  const target = e.target as HTMLInputElement;
-
-  switch (e.type) {
-    case 'change' :
-      if (target.files) {
-
-        const newFilesArr = [];
-        const length = target.files.length;
-
-        for (let i = 0; i < length; i++) {
-          newFilesArr.push(target.files[i]);
-        }
-
-        if (state) {
-          filterNewFilesOnUpload(state.uploadedFiles, newFilesArr)
-            .then(newFiles => {
-              dispatch(uploadSuccess(newFiles as File[]));
-              return newFiles
-            })
-            .catch(error => dispatch(uploadFail(error)));
-        } else {
-          dispatch(uploadSuccess(newFilesArr));
-        }
-      } else {
-        dispatch(uploadFail('Ooops'))
-      }
+  if (newFiles) {
+    dispatch(uploadSuccess(newFiles));
+    dispatch(generateSpriteFilesStarted());
+    extractDataFromSprite(newFiles)
+      .then(spriteFiles => dispatch(generateSpriteFilesSuccess(spriteFiles)))
+      .catch(error => dispatch(generateSpriteFilesFail(error)));
+  } else {
+    uploadFail('No new files, common..');
   }
 };
 
 export {
   loadData,
+  deleteUploadedData
 };
-
-/**
- * TODO: Куда отправить эту проверку?*/
-const filterNewFilesOnUpload = (oldFilesArr: File[], NewFilesArr: File[]) => new Promise<File[]|string>( (res, rej) => {
-  const newFiles = NewFilesArr.filter((newFile: File) => {
-    return !oldFilesArr.some(oldFile => {
-      return oldFile.name === newFile.name && oldFile.size === newFile.size;
-    });
-  });
-
-  if (newFiles.length) {
-    res(newFiles)
-  } else {
-    rej('No new files added')
-  }
-});

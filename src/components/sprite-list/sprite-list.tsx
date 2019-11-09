@@ -1,34 +1,58 @@
 import React from 'react';
 
+/*  Utils */
+import { ISpriteList, ISymbol } from '../../interfaces';
+import { getSVGSymbols } from '../../services/sprite-service';
+
+/*  Components  */
+import SpriteListItem from '../sprite-list-item';
+
 /*  Styles  */
-import './sprite-list.module.scss';
+import './sprite-list.scss';
 
-interface ISpriteList {
-  spriteArray: {title: string}[]
+interface Props {
+  spriteArray: ISpriteList
 }
 
-interface Text {
-  text?: number|string
-}
+const SpriteList = ({spriteArray}: Props) => {
+  let listCounter = 0;
 
-const SpriteList: React.FC<ISpriteList> = ({spriteArray}) => {
+  const spriteLists = spriteArray.map( ({title, spriteFile}) => {
+    const symbolList = getSVGSymbols(spriteFile);
+    let spriteItems;
 
-  const spriteItems = spriteArray.map( ({title}, idx) => <SpriteListItem key={idx}
-text={title} />);
+    /*todo bad code*/
+    const parser = new DOMParser();
+    const spriteElement = parser.parseFromString(spriteFile, "text/xml");
+    spriteElement.documentElement.style.display = 'none';
+    document.body.insertAdjacentElement('afterbegin', spriteElement.documentElement);
 
-  return (
-    <main className="container">
-      <ul className="sprite-list">
+    /*todo bad code*/
+    if (Array.isArray(symbolList)) {
+      let itemCounter = 0;
+      spriteItems = symbolList.map( (symbol: ISymbol) => {
+        return <SpriteListItem key={itemCounter++} symbol={symbol} />
+      });
+    } else {
+      spriteItems = <li>{symbolList.svg}</li>;
+    }
+
+    return (
+      <ul className="sprite-list" key={listCounter++}>
+        <li key={0} className="sprite-list__title"><h3>{title}</h3></li>
         {spriteItems}
       </ul>
-    </main>
+    )
+  });
+
+  return (
+    <section className="">
+      {spriteLists}
+    </section>
   );
 };
 
 export default SpriteList;
 
-const SpriteListItem: React.FC<Text> = (props) => {
-  return (
-    <li>{props.text || '1111'}</li>
-  );
-};
+
+

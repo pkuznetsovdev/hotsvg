@@ -1,39 +1,28 @@
-import React, { Component } from 'react';
-import { State, IUploadedState } from '../../interfaces';
-import { loadData } from '../../actions';
-import { connect } from 'react-redux';
+import React from 'react';
+import { IUploadedFiles } from '../../interfaces';
+import { onUploadData } from '../../services/loader-service';
 
-interface Props {
-  loadData: (e: any, data?: any) => any,
-  uploadedData: IUploadedState
-}
+const SpriteInput = () => {
 
-class SpriteInput extends Component<Props> {
+  const onChangeHandler = (e: React.ChangeEvent) => {
+    const { files } = e.target as HTMLInputElement;
+    if (!files) return;
+    let newFiles: IUploadedFiles = [];
 
-  /**
-   * TODO: Нужен другой способ для передачи стейта в action для проверки новых файлов*/
-  onUploadData = (e: React.FormEvent<HTMLInputElement>) => {
-    this.props.loadData(e, this.props.uploadedData)
+    for (let i = 0, filesLength = files.length; i < filesLength; i++) {
+      newFiles.push(files[i]);
+    }
+
+    onUploadData(newFiles);
   };
 
-  render() {
-    return (
-      <label className="btn-solid header__input">
-        <span>Pick or drop</span>
-        <input type="file"
-               multiple
-               hidden
-               onChange={this.onUploadData}
-        />
-      </label>
-    );
-  }
-}
-
-const mapStateToProps = ({uploadedData}: State) => ({uploadedData});
-
-const mapDispatchToProps = {
-  loadData
+  return (
+    <label className="btn-solid header__input">
+      <span>Pick or drop</span>
+      <input type="file" multiple hidden onChange={onChangeHandler} onClick={({target}) => (target as HTMLInputElement).value = ''}
+      />
+    </label>
+  );
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(SpriteInput);
+export default SpriteInput;
