@@ -46,9 +46,9 @@ const SpriteList = ({spriteArray}: Props) => {
   });
 
   return (
-    <main className="container">
+    <section className="">
       {spriteLists}
-    </main>
+    </section>
   );
 };
 

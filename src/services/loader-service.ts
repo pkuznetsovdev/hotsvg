@@ -1,8 +1,10 @@
 import { IUploadedFiles } from '../interfaces';
 import store from '../store';
+
 import { loadData } from '../actions';
 
 const onUploadData = (newFiles: IUploadedFiles) => {
+  /* todo Same file can't be uploaded right after was deleted*/
   const {uploadedFiles} = store.getState().uploadedData;
   newFiles = filterNewFilesOnUpload(uploadedFiles, newFiles);
   /* todo bad code - no dispatch*/

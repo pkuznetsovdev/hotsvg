@@ -1,4 +1,4 @@
-import { ISymbol, ISvg } from '../interfaces';
+import { ISymbol, ISvg, IUploadedFiles, ISpriteList } from '../interfaces';
 
 function getSVGSymbols(spriteFile: string): ISymbol[] | ISvg {
   const symbolArray = spriteFile.match(/<symbol.*?<\/symbol>/gmis);
@@ -21,6 +21,19 @@ function getSVGSymbols(spriteFile: string): ISymbol[] | ISvg {
   return symbolList;
 }
 
+function extractDataFromSprite(filesArr: IUploadedFiles): Promise<ISpriteList> {
+  return Promise.all(filesArr.map(file => {
+    return new Promise(res => {
+      const reader = new FileReader();
+      reader.readAsText(file, 'UTF-8');
+      reader.onload = () => {
+        res({ spriteFile: reader.result as string, title: file.name });
+      };
+    });
+  }));
+}
+
 export {
-  getSVGSymbols
+  getSVGSymbols,
+  extractDataFromSprite
 }

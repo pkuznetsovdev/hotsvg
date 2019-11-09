@@ -1,4 +1,4 @@
-import State, {IUploadedState, IUploadedFiles} from './state';
+import State, {IUploadedState, IUploadedFiles, IGeneratedSprites} from './state';
 import Action from './action';
 import {ISpriteListItem, ISymbol, ISpriteList, ISvg} from './sprite';
 
@@ -7,6 +7,8 @@ export {
   State,
 // @ts-ignore
   IUploadedState,
+// @ts-ignore
+  IGeneratedSprites,
 // @ts-ignore
   Action,
 // @ts-ignore

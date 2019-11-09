@@ -1,5 +1,7 @@
-import uploadedFilesSelector from './uploadedFilesSelector'
+import generatedFilesSelector from './generatedFilesSelector';
+import renderedFilesSelector from './renderedFilesSelector'
 
 export {
-  uploadedFilesSelector
+  generatedFilesSelector,
+  renderedFilesSelector
 };
