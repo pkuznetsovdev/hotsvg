@@ -19,7 +19,12 @@ const SpriteInput = () => {
   return (
     <label className="btn-solid header__input">
       <span>Pick or drop</span>
-      <input type="file" multiple hidden onChange={onChangeHandler} onClick={({target}) => (target as HTMLInputElement).value = ''}
+      <input type="file"
+             accept=".svg"
+             multiple
+             hidden
+             onChange={onChangeHandler}
+             onClick={({target}) => (target as HTMLInputElement).value = ''}
       />
     </label>
   );

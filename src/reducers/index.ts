@@ -1,4 +1,4 @@
-import { Action, IGeneratedSprites, IUploadedState, State } from '../interfaces';
+import { Action, State } from '../interfaces';
 
 import updateLoadedData from './updateLoadedData';
 import updateGeneratedSpriteFiles from './updateGeneratedSpriteFiles'
