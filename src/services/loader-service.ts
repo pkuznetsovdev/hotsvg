@@ -4,7 +4,6 @@ import store from '../store';
 import { loadData } from '../actions';
 
 const onUploadData = (newFiles: IUploadedFiles) => {
-  /* todo Same file can't be uploaded right after was deleted*/
   const {spriteList} = store.getState().generatedSpriteFiles;
   newFiles = filterNewFilesOnUpload(spriteList, newFiles);
   /* todo bad code - no dispatch*/

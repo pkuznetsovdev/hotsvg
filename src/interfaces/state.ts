@@ -15,7 +15,7 @@ export interface IGeneratedSprites {
 }
 
 export default interface State {
-  uploadedData: IUploadedState,
+  //uploadedData: IUploadedState,
   generatedSpriteFiles: IGeneratedSprites
 }
 

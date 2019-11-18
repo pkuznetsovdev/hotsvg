@@ -4,11 +4,11 @@ import updateLoadedData from './updateLoadedData';
 import updateGeneratedSpriteFiles from './updateGeneratedSpriteFiles'
 
 const initialState: State = {
-  uploadedData: {
+  /*uploadedData: {
     uploadedFiles: [],
     loading: false,
     error: null,
-  },
+  },*/
   generatedSpriteFiles: {
     spriteList: [],
     loading: false,
@@ -17,7 +17,7 @@ const initialState: State = {
 };
 
 const rootReducer = (state: State = initialState, action: Action): State => ({
-  uploadedData: updateLoadedData(state.uploadedData, action),
+  //uploadedData: updateLoadedData(state.uploadedData, action),
   generatedSpriteFiles: updateGeneratedSpriteFiles(state.generatedSpriteFiles, action),
 });
 
