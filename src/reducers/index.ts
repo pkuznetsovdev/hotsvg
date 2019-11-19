@@ -1,6 +1,5 @@
 import { Action, State } from '../interfaces';
 
-import updateLoadedData from './updateLoadedData';
 import updateGeneratedSpriteFiles from './updateGeneratedSpriteFiles'
 
 const initialState: State = {

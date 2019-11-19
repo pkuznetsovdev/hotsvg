@@ -1,8 +1,9 @@
 import actionTypes from './actionTypes';
 import { Action, ISpriteList, IUploadedFiles } from '../interfaces';
-import { extractDataFromSprite } from '../services/sprite-service';
+import { parseSpriteFilesToSpriteListItems } from '../services/sprite-service';
+import { parseTestSpriteFilesToSpriteListItems } from '../services/test-sprite-service';
 
-/*  Upload  */
+/*/!*  Upload  *!/
 const uploadStarted = (): Action => ({ type: actionTypes.onUploadStart });
 
 const uploadSuccess = (data: IUploadedFiles): Action => ({
@@ -13,7 +14,7 @@ const uploadSuccess = (data: IUploadedFiles): Action => ({
 const uploadFail = (error: string): Action => ({
   type: actionTypes.onUploadFail,
   payload: error,
-});
+});*/
 
 /*  Generate Sprites  */
 const generateSpriteFilesStarted = (): Action => ({ type: actionTypes.onUpdateSpriteFilesStart });
@@ -33,21 +34,25 @@ const deleteUploadedData = (): Action => ({
   type: actionTypes.onDeleteUploadedData
 });
 
-const loadData = (newFiles: IUploadedFiles) => (dispatch: any) => {
-  dispatch(uploadStarted());
+const loadTestData = (testSprites: string[]) => (dispatch: any) => {
+  dispatch(generateSpriteFilesStarted());
+  const spriteFiles = parseTestSpriteFilesToSpriteListItems(testSprites);
+  dispatch(generateSpriteFilesSuccess(spriteFiles));
+};
 
+const loadData = (newFiles: IUploadedFiles) => (dispatch: any) => {
   if (newFiles) {
-    dispatch(uploadSuccess(newFiles));
     dispatch(generateSpriteFilesStarted());
-    extractDataFromSprite(newFiles)
+    parseSpriteFilesToSpriteListItems(newFiles)
       .then(spriteFiles => dispatch(generateSpriteFilesSuccess(spriteFiles)))
       .catch(error => dispatch(generateSpriteFilesFail(error)));
   } else {
-    uploadFail('No new files, common..');
+    dispatch(generateSpriteFilesFail('No new files, common..'));
   }
 };
 
 export {
   loadData,
+  loadTestData,
   deleteUploadedData
 };

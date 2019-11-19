@@ -1,8 +1,11 @@
 import { ISpriteList, IUploadedFiles } from '../interfaces';
 import store from '../store';
 
-import { loadData } from '../actions';
+import { loadData, loadTestData } from '../actions';
 
+const onUploadTestData = (newFiles: string[]) => {
+  loadTestData(newFiles)(store.dispatch);
+};
 const onUploadData = (newFiles: IUploadedFiles) => {
   const {spriteList} = store.getState().generatedSpriteFiles;
   newFiles = filterNewFilesOnUpload(spriteList, newFiles);
@@ -21,5 +24,6 @@ const filterNewFilesOnUpload = (spritesArr: ISpriteList, NewFilesArr: File[]) =>
 };
 
 export {
-  onUploadData
+  onUploadData,
+  onUploadTestData
 }

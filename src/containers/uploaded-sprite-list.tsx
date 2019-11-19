@@ -7,7 +7,8 @@ import { generatedFilesSelector } from '../selectors';
 
 /*  Components  */
 import SpriteList from '../components/sprite-list';
-import { getTestSprites } from '../services/test-sprite-service';
+import { generateTestSprites } from '../utils/generate-test-sprites';
+import { onUploadTestData } from '../services/loader-service';
 
 
 interface IProps {
@@ -26,14 +27,15 @@ class UploadedSpriteList extends Component<IProps, IState> {
 
   componentDidMount(): void {
     if (!this.props.spriteList.length) {
-      console.log(getTestSprites());
+      generateTestSprites()
+        .then(res => onUploadTestData(res));
     }
   }
 
   render () {
     return <SpriteList spriteArray={this.props.spriteList} />;
   }
-};
+}
 
 const mapStateToProps = (state: State) => ({
   spriteList: generatedFilesSelector(state),

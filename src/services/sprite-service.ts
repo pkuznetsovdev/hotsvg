@@ -21,7 +21,7 @@ function getSVGSymbols(spriteFile: string): ISymbol[] | ISvg {
   return symbolList;
 }
 
-function extractDataFromSprite(filesArr: IUploadedFiles): Promise<ISpriteList> {
+function parseSpriteFilesToSpriteListItems(filesArr: IUploadedFiles): Promise<ISpriteList> {
   return Promise.all<ISpriteListItem>(filesArr.map(file => {
     return new Promise(res => {
       const reader = new FileReader();
@@ -45,5 +45,5 @@ function extractDataFromSprite(filesArr: IUploadedFiles): Promise<ISpriteList> {
 
 export {
   getSVGSymbols,
-  extractDataFromSprite
+  parseSpriteFilesToSpriteListItems
 }
