@@ -1,5 +1,6 @@
 import actionTypes from '../actions/actionTypes';
 import { Action, IGeneratedSprites } from '../interfaces';
+import filterNewFilesOnUpload from '../utils/filter-uploaded-files';
 
 const initialState = {
     spriteList: [],
@@ -17,7 +18,7 @@ const updateGeneratedSpriteFiles = (generatedSpriteFiles: IGeneratedSprites, act
       };
     case actionTypes.onUpdateSpriteFilesSuccess :
       return {
-        spriteList: [...generatedSpriteFiles.spriteList, ...action.payload],
+        spriteList: [...generatedSpriteFiles.spriteList, ...filterNewFilesOnUpload(generatedSpriteFiles.spriteList, action.payload)],
         loading: false,
         error: null,
       };

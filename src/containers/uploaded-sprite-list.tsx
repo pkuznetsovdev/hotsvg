@@ -7,12 +7,12 @@ import { generatedFilesSelector } from '../selectors';
 
 /*  Components  */
 import SpriteList from '../components/sprite-list';
-import { generateTestSprites } from '../utils/generate-test-sprites';
-import { onUploadTestData } from '../services/loader-service';
+import { loadTestData } from '../actions';
 
 
 interface IProps {
-  spriteList: ISpriteList
+  spriteList: ISpriteList,
+  loadTestData: () => void
 }
 
 interface IState {
@@ -27,8 +27,7 @@ class UploadedSpriteList extends Component<IProps, IState> {
 
   componentDidMount(): void {
     if (!this.props.spriteList.length) {
-      generateTestSprites()
-        .then(res => onUploadTestData(res));
+      this.props.loadTestData();
     }
   }
 
@@ -41,4 +40,8 @@ const mapStateToProps = (state: State) => ({
   spriteList: generatedFilesSelector(state),
 });
 
-export default connect(mapStateToProps)(UploadedSpriteList);
+const mapDispatchToProps = (dispatch: any) => ({
+  loadTestData: loadTestData(dispatch),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(UploadedSpriteList);

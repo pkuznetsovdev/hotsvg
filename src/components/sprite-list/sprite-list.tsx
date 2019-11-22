@@ -32,7 +32,7 @@ const SpriteList = ({spriteArray}: Props) => {
         return <SpriteListItem key={idx+1} symbol={symbol} />
       });
     } else {
-      spriteItems = <li className="sprite-list__item" dangerouslySetInnerHTML={{__html: symbolList.svg}}></li>;
+      spriteItems = <li className="sprite-list__item" dangerouslySetInnerHTML={{__html: symbolList.svg}} />;
     }
 
     return (

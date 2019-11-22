@@ -1,8 +1,37 @@
-import { fetchTestSprites } from './fetch-test-sprites';
+import { ISpriteList } from '../interfaces';
+
+const fetchTestSprites = async () => {
+
+  const urlTestSprite = "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/sprites/regular.svg";
+  const urlTestSvg = "https://s.cdpn.io/3/kiwi.svg";
+
+  const testSpriteResponse = await fetch(urlTestSprite);
+  const testSprite = await testSpriteResponse.text();
+
+  const testSvgResponse = await fetch(urlTestSvg);
+  const testSvg = await testSvgResponse.text();
+
+  return [testSprite, testSvg];
+};
+
+function parseTestSpriteFilesToSpriteListItems(filesArr: string[]): ISpriteList {
+  return filesArr.map((file, id) => {
+    const title = 'test-file' + (1 + id);
+    return {
+      spriteFile: file,
+      title,
+      id,
+      spriteData: {
+        name: title,
+        lastModified: Date.now()
+      },
+    };
+  });
+}
 
 const generateTestSprites = async () => {
   const testSpriteFiles = await fetchTestSprites().then(res => res);
-  return testSpriteFiles;
+  return parseTestSpriteFilesToSpriteListItems(testSpriteFiles);
 };
 
 export {
