@@ -1,4 +1,4 @@
-import { ISpriteList } from '../interfaces';
+import { UploadedListType } from '../interfaces';
 
 const fetchTestSprites = async () => {
 
@@ -14,11 +14,11 @@ const fetchTestSprites = async () => {
   return [testSprite, testSvg];
 };
 
-function parseTestSpriteFilesToSpriteListItems(filesArr: string[]): ISpriteList {
+function parseTestSpriteFilesToSpriteListItems(filesArr: string[]): UploadedListType {
   return filesArr.map((file, id) => {
     const title = 'test-file' + (1 + id);
     return {
-      spriteFile: file,
+      content: file,
       title,
       id,
       spriteData: {

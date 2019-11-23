@@ -1,6 +1,6 @@
-import { State, ISpriteList } from '../interfaces/';
+import { State, UploadedListType } from '../interfaces/';
 
-const generatedFilesSelector = ({ generatedSpriteFiles: { spriteList } }: State): ISpriteList => {
+const generatedFilesSelector = ({ generatedSpriteFiles: { spriteList } }: State): UploadedListType => {
   return spriteList;
 };
 

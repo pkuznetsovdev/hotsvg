@@ -3,10 +3,10 @@ import { connect } from 'react-redux';
 
 /*  Utils */
 import { loadData } from '../../actions';
-import { IUploadedFiles } from '../../interfaces';
+import { UploadedFiles } from '../../interfaces';
 
 type Props = {
-  loadData: (a: IUploadedFiles) => void
+  loadData: (a: UploadedFiles) => void
 };
 
 const SpriteInput = (props: Props) => {

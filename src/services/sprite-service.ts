@@ -1,49 +1,77 @@
-import { ISymbol, ISvg, IUploadedFiles, ISpriteList, ISpriteListItem } from '../interfaces';
+import { UploadedFiles, UploadedListType, UploadedListItem, SvgSymbol, SvgSymbolList } from '../interfaces';
 
-function getSVGSymbols(spriteFile: string): ISymbol[] | ISvg {
-  const symbolArray = spriteFile.match(/<symbol.*?<\/symbol>/gmis);
-  if (symbolArray === null) {
-      return {svg: spriteFile.match(/<svg.*?<\/svg>/gmis)![0]};
-  }
+const REG_EXP = {
+  id: /id=["'](.*?)["']/i,
+  title: /<title>(.*?)<\/title>/i,
+  viewBox: /viewBox=["'](.*?)["']/i,
+  symbol: /<symbol.*?<\/symbol>/gmis,
+  svg: /<svg.*?<\/svg>/gmis,
 
-  const symbolList: ISymbol[] = [];
+  spriteTitle: /\.svg$/i,
+};
 
-  /*todo bad code*/
-  symbolArray.forEach(svg => {
-    const symbol: ISymbol = {id: '', title: '', viewBox: ''};
-    symbol.id = svg.match(/<symbol.*id=["'](.*?)["']/i) ? svg.match(/<symbol.*id=["'](.*?)["']/i)![1] : '';
-    symbol.title = svg.match(/<title>(.*?)<\/title>/i) ? svg.match(/<title>(.*?)<\/title>/i)![1] : '';
-    symbol.viewBox = svg.match(/viewBox=["'](.*?)["']/i) ? svg.match(/viewBox=["'](.*?)["']/i)![1] : '';
-
-    symbolList.push(symbol);
-  });
-
-  return symbolList;
+function getContentData (content: string) {
+  return getSvgSymbols(content) || getSvgIcon(content) ;
 }
 
-function parseSpriteFilesToSpriteListItems(filesArr: IUploadedFiles): Promise<ISpriteList> {
-  return Promise.all<ISpriteListItem>(filesArr.map(file => {
+function getSvgIcon(fileContent: string): {} | null {
+  return { svg: fileContent.match(REG_EXP.svg)![0] };
+}
+
+function getSvgSymbols(fileContent: string): SvgSymbolList | null {
+  const symbolArray = getSymbolArray(fileContent);
+  if (!symbolArray) return null;
+
+  return symbolArray.map(svg => {
+      return new SvgSymbol(
+        getSymbolAttribute(svg, REG_EXP.id),
+        getSymbolAttribute(svg, REG_EXP.title),
+        getSymbolAttribute(svg, REG_EXP.viewBox),
+      );
+  });
+
+  function getSymbolArray(sprite: string) {
+    return sprite.match(REG_EXP.symbol) || null;
+  }
+
+  function getSymbolAttribute(svg: string, exp: RegExp) {
+    const result = svg.match(exp);
+    return result ? result[1] : '';
+  }
+}
+
+function parseFilesToSpriteList(uploadedFiles: UploadedFiles): Promise<UploadedListType> {
+  return Promise.all<UploadedListItem>(uploadedFiles.map(file => {
     return new Promise(res => {
+
       const reader = new FileReader();
       reader.readAsText(file, 'UTF-8');
+
       reader.onload = () => {
-        const title = file.name.replace(/\.svg$/i, '');
-        const id = (file.lastModified + file.size)%100000;
-        res({
-          spriteFile: reader.result as string,
-          title,
-          id,
+        return res({
+          content: reader.result as string,
+          title: getSpriteTitle(file.name, REG_EXP.spriteTitle),
+          id: getSpriteId(file.lastModified, file.size),
           spriteData: {
             name: file.name,
-            lastModified: file.lastModified
-          }
+            lastModified: file.lastModified,
+          },
         });
       };
     });
   }));
+
+  function getSpriteTitle (fileName: string, exp: RegExp) {
+    return fileName.replace(exp, '');
+  }
+
+  function getSpriteId (lastModified: number, size: number) {
+    return (lastModified + size) % 100000;
+  }
 }
 
 export {
-  getSVGSymbols,
-  parseSpriteFilesToSpriteListItems
-}
+  getSvgSymbols,
+  parseFilesToSpriteList,
+  getContentData,
+};

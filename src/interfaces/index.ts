@@ -1,6 +1,9 @@
-import State, {IUploadedState, IUploadedFiles, IGeneratedSprites} from './state';
+import State, {IUploadedState, UploadedFiles, IGeneratedSprites} from './state';
 import Action from './action';
-import {ISpriteListItem, ISymbol, ISpriteList, ISvg} from './sprite';
+import {UploadedListItem, UploadedListType, SvgIcon } from './sprite';
+import SvgSymbol from './SvgSymbol'
+
+type SvgSymbolList = SvgSymbol[];
 
 export {
 // @ts-ignore
@@ -12,13 +15,14 @@ export {
 // @ts-ignore
   Action,
 // @ts-ignore
-  IUploadedFiles,
+  UploadedFiles,
 // @ts-ignore
-  ISpriteList,
+  UploadedListType,
 // @ts-ignore
-  ISpriteListItem,
+  UploadedListItem,
 // @ts-ignore
-  ISymbol,
+  SvgIcon,
 // @ts-ignore
-  ISvg,
+  SvgSymbolList,
+  SvgSymbol,
 }

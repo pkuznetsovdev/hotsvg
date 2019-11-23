@@ -1,15 +1,15 @@
-import { ISpriteList } from './sprite';
+import { UploadedListType } from './sprite';
 
-export type IUploadedFiles = File[];
+export type UploadedFiles = File[];
 
 export interface IUploadedState {
-  uploadedFiles: IUploadedFiles,
+  uploadedFiles: UploadedFiles,
   loading: boolean,
   error: string | null,
 }
 
 export interface IGeneratedSprites {
-  spriteList: ISpriteList,
+  spriteList: UploadedListType,
   loading: boolean,
   error: string | null,
 }

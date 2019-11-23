@@ -1,8 +1,8 @@
 import React from 'react';
 
 /*  Utils */
-import { ISpriteList, ISymbol } from '../../interfaces';
-import { getSVGSymbols } from '../../services/sprite-service';
+import { UploadedListType, SvgSymbol } from '../../interfaces';
+import { getSvgSymbols } from '../../services/sprite-service';
 
 /*  Components  */
 import SpriteListItem from '../sprite-list-item';
@@ -11,28 +11,29 @@ import SpriteListItem from '../sprite-list-item';
 import './sprite-list.scss';
 
 interface Props {
-  spriteArray: ISpriteList
+  spriteList: UploadedListType
 }
 
-const SpriteList = ({spriteArray}: Props) => {
+const SpriteList = ({spriteList}: Props) => {
 
-  const spriteLists = spriteArray.map( ({title, spriteFile, id}) => {
-    const symbolList = getSVGSymbols(spriteFile);
+  const generatedLists = spriteList.map( ({title, content, id}) => {
+    const symbolList = getSvgSymbols(content);
     let spriteItems;
 
     /*todo bad code*/
     const parser = new DOMParser();
-    const spriteElement = parser.parseFromString(spriteFile, "text/xml");
+    const spriteElement = parser.parseFromString(content, "text/xml");
     spriteElement.documentElement.style.display = 'none';
     document.body.insertAdjacentElement('afterbegin', spriteElement.documentElement);
 
     /*todo bad code*/
     if (Array.isArray(symbolList)) {
-      spriteItems = symbolList.map( (symbol: ISymbol, idx) => {
+      spriteItems = symbolList.map( (symbol: SvgSymbol, idx) => {
         return <SpriteListItem key={idx+1} symbol={symbol} />
       });
     } else {
-      spriteItems = <li className="sprite-list__item" dangerouslySetInnerHTML={{__html: symbolList.svg}} />;
+      //spriteItems = <li className="sprite-list__item" dangerouslySetInnerHTML={{__html: symbolList.svg}} />;
+      spriteItems = null
     }
 
     return (
@@ -43,7 +44,7 @@ const SpriteList = ({spriteArray}: Props) => {
     )
   });
 
-  return <>{spriteLists}</>;
+  return <>{generatedLists}</>;
 };
 
 export default SpriteList;

@@ -1,12 +1,12 @@
 import actionTypes from './actionTypes';
-import { Action, ISpriteList, IUploadedFiles } from '../interfaces';
-import { parseSpriteFilesToSpriteListItems } from '../services/sprite-service';
+import { Action, UploadedListType, UploadedFiles } from '../interfaces';
+import { parseFilesToSpriteList } from '../services/sprite-service';
 import { generateTestSprites } from '../utils/generate-test-sprites';
 
 /*  Generate Sprites  */
 const generateSpriteFilesStarted = (): Action => ({ type: actionTypes.onUpdateSpriteFilesStart });
 
-const generateSpriteFilesSuccess = (data: ISpriteList): Action => ({
+const generateSpriteFilesSuccess = (data: UploadedListType): Action => ({
   type: actionTypes.onUpdateSpriteFilesSuccess,
   payload: data,
 });
@@ -27,9 +27,9 @@ const loadTestData = (dispatch: any) => () => {
     .then(spriteFiles => dispatch(generateSpriteFilesSuccess(spriteFiles)));
 };
 
-const loadData = (dispatch: any) => (newFiles: IUploadedFiles) => {
+const loadData = (dispatch: any) => (newFiles: UploadedFiles) => {
     dispatch(generateSpriteFilesStarted());
-    parseSpriteFilesToSpriteListItems(newFiles)
+    parseFilesToSpriteList(newFiles)
       .then(spriteFiles => dispatch(generateSpriteFilesSuccess(spriteFiles)))
       .catch(error => dispatch(generateSpriteFilesFail(error)));
 };

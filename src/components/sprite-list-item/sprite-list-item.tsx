@@ -1,13 +1,13 @@
 import React from 'react';
 
 /*  Utils */
-import { ISymbol } from '../../interfaces';
+import { SvgSymbol } from '../../interfaces';
 
 /*  Styles  */
 import './sprite-list-item.scss'
 
 interface Props {
-  symbol: ISymbol
+  symbol: SvgSymbol
 }
 
 const SpriteListItem = ({symbol: {id, viewBox, title}}: Props) => {
