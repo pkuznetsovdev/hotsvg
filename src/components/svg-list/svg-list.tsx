@@ -1,4 +1,4 @@
-import React, { DOMElement } from 'react';
+import React from 'react';
 
 type Props = {
   svg: string,
@@ -9,7 +9,7 @@ type Props = {
 const SvgList = ({svg, title, id}: Props) => {
   const parser = new DOMParser();
   const svgIcon = parser.parseFromString(svg, "image/svg+xml").documentElement;
-
+  console.log(svgIcon);
   // const div = document.createElement('div');
   // div.innerHTML = svg.trim();
   // const icon = div.firstElementChild;

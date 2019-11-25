@@ -2,14 +2,13 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 /*  Utils  */
-import { State, UploadedListType, SvgSymbol, SvgSymbolList, UploadedListItem } from '../interfaces';
+import { State, UploadedListType } from '../interfaces';
 import { generatedFilesSelector } from '../selectors';
 import { loadTestData } from '../actions';
 import { getContentData } from '../services/sprite-service';
 
 /*  Components  */
 import SpriteList from '../components/sprite-list';
-import SpriteListItem from '../components/sprite-list-item';
 import SvgList from '../components/svg-list';
 
 
@@ -36,16 +35,16 @@ class UploadedSpriteList extends Component<IProps, IState> {
 
   render() {
 
-    const generatedList = this.props.uploadedList.map(({content, id, title}) => {
+    const generatedList = this.props.uploadedList.map(({ content, id, title }) => {
 
       /*todo move to action before upload to store*/
       const generatedListItem = getContentData(content);
       if (!generatedListItem) return null;
 
       if (Array.isArray(generatedListItem)) {
-        return <SpriteList symbolList={generatedListItem} id={id} title={title} key={id} />
+        return <SpriteList symbolList={generatedListItem} id={id} title={title} key={id} />;
       } else {
-        return <SvgList svg={generatedListItem} id={id} title={title} key={id}/>
+        return <SvgList svg={generatedListItem} id={id} title={title} key={id} />;
       }
     });
 
