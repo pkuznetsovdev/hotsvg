@@ -14,8 +14,8 @@ function getContentData (content: string) {
   return getSvgSymbols(content) || getSvgIcon(content) ;
 }
 
-function getSvgIcon(fileContent: string): {} | null {
-  return { svg: fileContent.match(REG_EXP.svg)![0] };
+function getSvgIcon(fileContent: string): string | null {
+  return fileContent.match(REG_EXP.svg)![0];
 }
 
 function getSvgSymbols(fileContent: string): SvgSymbolList | null {

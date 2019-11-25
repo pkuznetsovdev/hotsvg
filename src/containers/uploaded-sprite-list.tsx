@@ -4,12 +4,13 @@ import { connect } from 'react-redux';
 /*  Utils  */
 import { State, UploadedListType, SvgSymbol, SvgSymbolList, UploadedListItem } from '../interfaces';
 import { generatedFilesSelector } from '../selectors';
+import { loadTestData } from '../actions';
+import { getContentData } from '../services/sprite-service';
 
 /*  Components  */
 import SpriteList from '../components/sprite-list';
-import { loadTestData } from '../actions';
-import { getContentData } from '../services/sprite-service';
 import SpriteListItem from '../components/sprite-list-item';
+import SvgList from '../components/svg-list';
 
 
 interface IProps {
@@ -36,22 +37,23 @@ class UploadedSpriteList extends Component<IProps, IState> {
   render() {
 
     const generatedList = this.props.uploadedList.map(({content, id, title}) => {
+
+      /*todo move to action before upload to store*/
       const generatedListItem = getContentData(content);
-      console.log(generatedListItem);
       if (!generatedListItem) return null;
 
       if (Array.isArray(generatedListItem)) {
-        return this.generateSpriteList(generatedListItem, id, title);
+        return <SpriteList symbolList={generatedListItem} id={id} title={title} key={id} />
       } else {
-
+        return <SvgList svg={generatedListItem} id={id} title={title} key={id}/>
       }
     });
 
 
-    return <SpriteList spriteList={this.props.uploadedList} />;
+    return <>{generatedList}</>;
   }
 
-  generateSpriteList = (symbolList: SvgSymbolList, id: number, title: string) => {
+  /*generateSpriteList = (symbolList: SvgSymbolList, id: number, title: string) => {
     const spriteItems = symbolList.map( (symbol: SvgSymbol, idx) => {
       return <SpriteListItem key={idx+1} symbol={symbol} />
     });
@@ -64,7 +66,7 @@ class UploadedSpriteList extends Component<IProps, IState> {
 
   generateSvgList = () => {
 
-  };
+  };*/
 }
 
 const mapStateToProps = (state: State) => ({

@@ -1,8 +1,7 @@
 import React from 'react';
 
 /*  Utils */
-import { UploadedListType, SvgSymbol } from '../../interfaces';
-import { getSvgSymbols } from '../../services/sprite-service';
+import { UploadedListType, SvgSymbol, SvgSymbolList } from '../../interfaces';
 
 /*  Components  */
 import SpriteListItem from '../sprite-list-item';
@@ -14,19 +13,19 @@ interface Props {
   spriteList: UploadedListType
 }
 
-const SpriteList = ({spriteList}: Props) => {
+/*const SpriteList = ({spriteList}: Props) => {
 
   const generatedLists = spriteList.map( ({title, content, id}) => {
     const symbolList = getSvgSymbols(content);
     let spriteItems;
 
-    /*todo bad code*/
+    /!*todo bad code*!/
     const parser = new DOMParser();
     const spriteElement = parser.parseFromString(content, "text/xml");
     spriteElement.documentElement.style.display = 'none';
     document.body.insertAdjacentElement('afterbegin', spriteElement.documentElement);
 
-    /*todo bad code*/
+    /!*todo bad code*!/
     if (Array.isArray(symbolList)) {
       spriteItems = symbolList.map( (symbol: SvgSymbol, idx) => {
         return <SpriteListItem key={idx+1} symbol={symbol} />
@@ -42,9 +41,24 @@ const SpriteList = ({spriteList}: Props) => {
         {spriteItems}
       </ul>
     )
+  });*/
+
+type SpriteListProps = {
+  symbolList: SvgSymbolList,
+  id: number,
+  title: string
+}
+
+const SpriteList = ({symbolList, id, title}: SpriteListProps) => {
+  const spriteItems = symbolList.map( (symbol: SvgSymbol, idx) => {
+
+    return <SpriteListItem key={idx + 1} symbol={symbol} />
   });
 
-  return <>{generatedLists}</>;
+  return <ul className="sprite-list" id={`${id}`}>
+    <li key={0} className="sprite-list__title"><h3>{title}</h3></li>
+    {spriteItems}
+  </ul>
 };
 
 export default SpriteList;

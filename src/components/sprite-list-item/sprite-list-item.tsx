@@ -4,16 +4,17 @@ import React from 'react';
 import { SvgSymbol } from '../../interfaces';
 
 /*  Styles  */
-import './sprite-list-item.scss'
+import './sprite-list-item.scss';
 
 interface Props {
-  symbol: SvgSymbol
+  symbol: SvgSymbol,
+  //idx: number,
 }
 
-const SpriteListItem = ({symbol: {id, viewBox, title}}: Props) => {
+const SpriteListItem = ({ symbol: { id, viewBox, title } }: Props) => {
   return (
     <li className="sprite-list__item">
-      <svg viewBox={viewBox} className='icon'>
+      <svg viewBox={viewBox} className="icon">
         <use xlinkHref={`#${id}`} />
       </svg>
       <div className="icon-info">

@@ -1,5 +1,10 @@
 import { UploadedListType } from '../interfaces';
 
+const generateTestSprites = async () => {
+  const testSpriteFiles = await fetchTestSprites().then(res => res);
+  return parseTestSpriteFilesToSpriteListItems(testSpriteFiles);
+};
+
 const fetchTestSprites = async () => {
 
   const urlTestSprite = "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/sprites/regular.svg";
@@ -28,11 +33,6 @@ function parseTestSpriteFilesToSpriteListItems(filesArr: string[]): UploadedList
     };
   });
 }
-
-const generateTestSprites = async () => {
-  const testSpriteFiles = await fetchTestSprites().then(res => res);
-  return parseTestSpriteFilesToSpriteListItems(testSpriteFiles);
-};
 
 export {
   generateTestSprites
