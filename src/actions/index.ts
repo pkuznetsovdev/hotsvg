@@ -1,12 +1,12 @@
 import actionTypes from './actionTypes';
-import { Action, UploadedListType, UploadedFiles } from '../interfaces';
-import { parseFilesToSpriteList } from '../services/sprite-service';
+import { Action, SvgArray } from '../interfaces';
+import { generateSvgFileArr, getContentData1 } from '../services/sprite-service';
 import { generateTestSprites } from '../utils/generate-test-sprites';
 
 /*  Generate Sprites  */
 const generateSpriteFilesStarted = (): Action => ({ type: actionTypes.onUpdateSpriteFilesStart });
 
-const generateSpriteFilesSuccess = (data: UploadedListType): Action => ({
+const generateSpriteFilesSuccess = (data: SvgArray): Action => ({
   type: actionTypes.onUpdateSpriteFilesSuccess,
   payload: data,
 });
@@ -27,10 +27,14 @@ const loadTestData = (dispatch: any) => () => {
     .then(spriteFiles => dispatch(generateSpriteFilesSuccess(spriteFiles)));
 };
 
-const loadData = (dispatch: any) => (newFiles: UploadedFiles) => {
+const loadData = (dispatch: any) => (newFiles: File[]) => {
     dispatch(generateSpriteFilesStarted());
-    parseFilesToSpriteList(newFiles)
-      .then(spriteFiles => dispatch(generateSpriteFilesSuccess(spriteFiles)))
+    generateSvgFileArr(newFiles)
+      .then(files => {
+        const parsedArray = getContentData1(files);
+        if (!parsedArray) throw Error('Unable to parse the file');
+        dispatch(generateSpriteFilesSuccess(parsedArray))
+      })
       .catch(error => dispatch(generateSpriteFilesFail(error)));
 };
 

@@ -1,9 +1,9 @@
 import actionTypes from '../actions/actionTypes';
-import { UploadedListType } from './';
+import { SvgArray } from './index';
 
 type Action =
   { type: actionTypes.onUpdateSpriteFilesStart } |
-  { type: actionTypes.onUpdateSpriteFilesSuccess, payload: UploadedListType } |
+  { type: actionTypes.onUpdateSpriteFilesSuccess, payload: SvgArray } |
   { type: actionTypes.onUpdateSpriteFilesFail, payload: string | null } |
 
   { type: actionTypes.onDeleteUploadedData } |

@@ -1,9 +1,9 @@
-import { UploadedListType } from '../interfaces';
+import { SvgFile } from '../interfaces';
 
-const filterNewFilesOnUpload = (spritesArr: UploadedListType, NewFilesArr: UploadedListType) => {
+const filterNewFilesOnUpload = (spritesArr: SvgFile[], NewFilesArr: SvgFile[]) => {
   return NewFilesArr.filter(newFile => {
     return !spritesArr.some(sprite => {
-      return sprite.spriteData.name === newFile.spriteData.name && sprite.spriteData.lastModified === newFile.spriteData.lastModified
+      return sprite.data.name === newFile.data.name && sprite.data.lastModified === newFile.data.lastModified
     });
   })
 };

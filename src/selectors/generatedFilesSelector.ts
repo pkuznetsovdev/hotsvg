@@ -1,7 +1,7 @@
-import { State, UploadedListType } from '../interfaces/';
+import { State, SvgFile } from '../interfaces/';
 
-const generatedFilesSelector = ({ generatedSpriteFiles: { spriteList } }: State): UploadedListType => {
-  return spriteList;
+const generatedFilesSelector = ({ generatedFiles: { svgArray } }: State): SvgFile[] => {
+  return svgArray;
 };
 
 export default generatedFilesSelector;

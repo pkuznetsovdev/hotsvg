@@ -2,10 +2,11 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 /*  Utils  */
-import { State, UploadedListType } from '../interfaces';
+import { State, SvgFile } from '../interfaces';
 import { generatedFilesSelector } from '../selectors';
 import { loadTestData } from '../actions';
 import { getContentData } from '../services/sprite-service';
+import appendXMLToDom from '../utils/appenXMLToDom';
 
 /*  Components  */
 import SpriteList from '../components/sprite-list';
@@ -13,19 +14,11 @@ import SvgList from '../components/svg-list';
 
 
 interface IProps {
-  uploadedList: UploadedListType,
+  uploadedList: SvgFile[],
   loadTestData: () => void
 }
 
-interface IState {
-  spriteList: UploadedListType
-}
-
-class UploadedSpriteList extends Component<IProps, IState> {
-
-  state = {
-    spriteList: [],
-  };
+class UploadedSpriteList extends Component<IProps> {
 
   componentDidMount(): void {
     if (!this.props.uploadedList.length) {
@@ -35,19 +28,14 @@ class UploadedSpriteList extends Component<IProps, IState> {
 
   render() {
 
-    const generatedList = this.props.uploadedList.map(({ content, id, title }) => {
+    const generatedList = this.props.uploadedList.map(({ src, id, title }) => {
 
       /*todo move to action before upload to store*/
-      const generatedListItem = getContentData(content);
+      const generatedListItem = getContentData(src);
       if (!generatedListItem) return null;
 
       if (Array.isArray(generatedListItem)) {
-
-        /*todo function insertSpriteToHTML*/
-        const parser = new DOMParser();
-        const spriteElement = parser.parseFromString(content, "text/xml");
-        document.body.insertAdjacentElement('afterbegin', spriteElement.documentElement);
-
+        appendXMLToDom(document.body, src);
         return <SpriteList symbolList={generatedListItem} id={id} title={title} key={id} />;
       } else {
         return <SvgList svg={generatedListItem} id={id} title={title} key={id} />;

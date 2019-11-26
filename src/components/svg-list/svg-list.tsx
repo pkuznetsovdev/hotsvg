@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 
+/*  Utils */
+import appendXMLToDom from '../../utils/appenXMLToDom';
+
 /*  Styles  */
 import './svg-list.scss';
 
@@ -15,13 +18,7 @@ class SvgList extends Component<Props> {
 
   componentDidMount(): void {
     if (!this.list || !this.list.current) return;
-
-    /*todo function insertSVGToHTML*/
-    const parser = new DOMParser();
-    const icon = parser.parseFromString(this.props.svg, "text/xml").documentElement;
-    icon.setAttribute('class', 'icon');
-
-    this.list.current.appendChild(icon);
+    appendXMLToDom(this.list.current,this.props.svg, 'icon');
   }
 
   render() {
@@ -31,6 +28,6 @@ class SvgList extends Component<Props> {
       </ul>
     );
   }
-};
+}
 
 export default SvgList;

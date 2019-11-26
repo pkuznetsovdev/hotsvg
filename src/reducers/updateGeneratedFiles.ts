@@ -1,14 +1,14 @@
 import actionTypes from '../actions/actionTypes';
-import { Action, IGeneratedSprites } from '../interfaces';
+import { Action, IGeneratedFiles } from '../interfaces';
 import filterNewFilesOnUpload from '../utils/filter-uploaded-files';
 
 const initialState = {
-    spriteList: [],
-    loading: false,
-    error: null,
+  svgFileArray: [],
+  loading: false,
+  error: null,
 };
 
-const updateGeneratedSpriteFiles = (generatedSpriteFiles: IGeneratedSprites, action: Action) => {
+const updateGeneratedFiles = (generatedSpriteFiles: IGeneratedFiles, action: Action) => {
   switch (action.type) {
     case actionTypes.onUpdateSpriteFilesStart :
       return {
@@ -18,7 +18,7 @@ const updateGeneratedSpriteFiles = (generatedSpriteFiles: IGeneratedSprites, act
       };
     case actionTypes.onUpdateSpriteFilesSuccess :
       return {
-        spriteList: [...generatedSpriteFiles.spriteList, ...filterNewFilesOnUpload(generatedSpriteFiles.spriteList, action.payload)],
+        svgArray: [...generatedSpriteFiles.svgArray, ...filterNewFilesOnUpload(generatedSpriteFiles.svgArray, action.payload)],
         loading: false,
         error: null,
       };
@@ -35,4 +35,4 @@ const updateGeneratedSpriteFiles = (generatedSpriteFiles: IGeneratedSprites, act
   }
 };
 
-export default updateGeneratedSpriteFiles;
+export default updateGeneratedFiles;

@@ -1,21 +1,14 @@
-import { UploadedListType } from './sprite';
+import { SvgIcon, SvgSymbol } from './../interfaces';
 
-export type UploadedFiles = File[];
+export type SvgArray = Array<SvgIcon | SvgSymbol>
 
-export interface IUploadedState {
-  uploadedFiles: UploadedFiles,
-  loading: boolean,
-  error: string | null,
-}
-
-export interface IGeneratedSprites {
-  spriteList: UploadedListType,
+export interface IGeneratedFiles {
+  svgArray: SvgArray,
   loading: boolean,
   error: string | null,
 }
 
 export default interface State {
-  //uploadedData: IUploadedState,
-  generatedSpriteFiles: IGeneratedSprites
+  generatedFiles: IGeneratedFiles
 }
 

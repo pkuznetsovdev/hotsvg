@@ -1,7 +1,7 @@
 import { State } from '../interfaces/';
 
-const renderedFilesSelector = ({ generatedSpriteFiles: { spriteList } }: State): {title: string, id: number}[] => {
-  return spriteList.map(({title, id}) => ({title, id}));
+const renderedFilesSelector = ({ generatedFiles: { svgArray } }: State): {title: string, id: number}[] => {
+  return svgArray.map(({title, id}) => ({title, id}));
 };
 
 export default renderedFilesSelector;
