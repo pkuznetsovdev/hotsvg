@@ -1,4 +1,7 @@
-import React from 'react';
+import React, { Component } from 'react';
+
+/*  Styles  */
+import './svg-list.scss';
 
 type Props = {
   svg: string,
@@ -6,23 +9,28 @@ type Props = {
   id: number,
 };
 
-const SvgList = ({svg, title, id}: Props) => {
-  const parser = new DOMParser();
-  const svgIcon = parser.parseFromString(svg, "image/svg+xml").documentElement;
-  console.log(svgIcon);
-  // const div = document.createElement('div');
-  // div.innerHTML = svg.trim();
-  // const icon = div.firstElementChild;
-  //(icon as HTMLElement).setAttribute('class','svg-list__icon');
-  //svgIcon.setAttribute('class','svg-list__icon');
-  //console.log(icon);
+class SvgList extends Component<Props> {
 
-  return (
-    <ul className="svg-list" id={`${id}`}>
-      <li key={0} className="svg-list__title"><h3>{title}</h3></li>
-      {/*{svgIcon}*/}
-    </ul>
-  );
+  list = React.createRef<HTMLUListElement>();
+
+  componentDidMount(): void {
+    if (!this.list || !this.list.current) return;
+
+    /*todo function insertSVGToHTML*/
+    const parser = new DOMParser();
+    const icon = parser.parseFromString(this.props.svg, "text/xml").documentElement;
+    icon.setAttribute('class', 'icon');
+
+    this.list.current.appendChild(icon);
+  }
+
+  render() {
+    return (
+      <ul className="svg-list" id={`${this.props.id}`} ref={this.list}>
+        <li key={0} className="svg-list__title"><h3>{this.props.title}</h3></li>
+      </ul>
+    );
+  }
 };
 
 export default SvgList;

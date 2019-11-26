@@ -42,6 +42,12 @@ class UploadedSpriteList extends Component<IProps, IState> {
       if (!generatedListItem) return null;
 
       if (Array.isArray(generatedListItem)) {
+
+        /*todo function insertSpriteToHTML*/
+        const parser = new DOMParser();
+        const spriteElement = parser.parseFromString(content, "text/xml");
+        document.body.insertAdjacentElement('afterbegin', spriteElement.documentElement);
+
         return <SpriteList symbolList={generatedListItem} id={id} title={title} key={id} />;
       } else {
         return <SvgList svg={generatedListItem} id={id} title={title} key={id} />;
@@ -51,21 +57,6 @@ class UploadedSpriteList extends Component<IProps, IState> {
 
     return <>{generatedList}</>;
   }
-
-  /*generateSpriteList = (symbolList: SvgSymbolList, id: number, title: string) => {
-    const spriteItems = symbolList.map( (symbol: SvgSymbol, idx) => {
-      return <SpriteListItem key={idx+1} symbol={symbol} />
-    });
-
-    return <ul className="sprite-list" key={id} id={`${id}`}>
-      <li key={0} className="sprite-list__title"><h3>{title}</h3></li>
-      {spriteItems}
-    </ul>
-  };
-
-  generateSvgList = () => {
-
-  };*/
 }
 
 const mapStateToProps = (state: State) => ({

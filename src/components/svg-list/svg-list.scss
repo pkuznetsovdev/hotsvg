@@ -1,0 +1,16 @@
+@import '../../styles/variables';
+
+.svg-list {
+    display: flex;
+    flex-wrap: wrap;
+
+    &__title {
+        width:         100%;
+        border-bottom: 1px solid $gray;
+        margin:        0;
+    }
+
+    .icon {
+        margin: 1.5em 0;
+    }
+}

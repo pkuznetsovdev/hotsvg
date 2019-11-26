@@ -50,8 +50,8 @@ type SpriteListProps = {
 }
 
 const SpriteList = ({symbolList, id, title}: SpriteListProps) => {
-  const spriteItems = symbolList.map( (symbol: SvgSymbol, idx) => {
 
+  const spriteItems = symbolList.map( (symbol: SvgSymbol, idx) => {
     return <SpriteListItem key={idx + 1} symbol={symbol} />
   });
 
