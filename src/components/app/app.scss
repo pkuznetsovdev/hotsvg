@@ -32,15 +32,17 @@
 
 .content {
     position:   absolute;
-    top:        0;
+    top:        60px;
     left:       0;
     right:      0;
     bottom:     0;
     overflow-y: auto;
 
     &-wrapper {
-        position: relative;
-        flex-grow: 1;
-        display:   flex;
+        position:    relative;
+        flex-grow:   1;
+        display:     flex;
+        flex-flow:   column;
+        padding-top: 10px;
     }
 }

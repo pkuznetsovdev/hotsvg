@@ -1,50 +1,65 @@
-import React, { Component } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 
 /*  Utils  */
-import { State, SvgArray, svgTypes} from '../interfaces';
+import { State, SvgArray, svgTypes } from '../interfaces';
 import { generatedFilesSelector } from '../selectors';
 import { loadTestData } from '../actions';
-import appendXMLToDom from '../utils/appendXMLToDom';
 
 /*  Components  */
 import SpriteList from '../components/sprite-list';
 import SvgList from '../components/svg-list';
+import SearchInput from '../components/search-input';
 
-interface IProps {
+type Props = {
   uploadedList: SvgArray,
-  loadTestData: () => void
+  loadTestData: () => void,
 }
 
-class UploadedSpriteList extends Component<IProps> {
+const UploadedSpriteList = (props: Props) => {
 
-  componentDidMount(): void {
-    if (!this.props.uploadedList.length) {
-      this.props.loadTestData();
+  const [value, setValue] = useState('');
+
+  useEffect(() => {
+    if (!props.uploadedList.length) {
+      props.loadTestData();
     }
-  }
+  },[]);
 
-  render() {
+  const onChangeFilter = (value: string) => {
+    setValue(value);
+  };
 
-    const generatedList = this.props.uploadedList.map(item => {
-      const {id, title} = item;
+  const regExp = new RegExp(value,"gi");
 
-      switch (item.type) {
-        case svgTypes.sprite: {
-          return <SpriteList symbolList={item.symbols} id={id} title={title} key={id} />;
-        }
-        case svgTypes.icon: {
-          return <SvgList icon={item.icon} id={id} title={title} key={id} />;
-        }
-        default:
-          return null;
+  const generatedList = props.uploadedList.map(item => {
+    const { id, title } = item;
+
+    switch (item.type) {
+      case svgTypes.sprite: {
+        return <SpriteList symbolList={item.symbols} id={id} title={title} key={id} regExp={regExp}/>;
       }
-    });
+      case svgTypes.icon: {
+        if (title.search(regExp) === -1) {
+          return null;
+        }
+        return <SvgList icon={item.icon} id={id} title={title} key={id} />;
+      }
+      default:
+        return null;
+    }
+  });
 
 
-    return <>{generatedList}</>;
-  }
-}
+  return (
+    <>
+      {!props.uploadedList.length || <SearchInput value={value} onChangeFilter={onChangeFilter} />}
+      <section className="content">
+        {generatedList}
+      </section>
+    </>
+  );
+};
 
 const mapStateToProps = (state: State) => ({
   uploadedList: generatedFilesSelector(state),

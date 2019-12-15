@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useEffect, useRef } from 'react';
 
 /*  Utils */
 import appendXMLToDom from '../../utils/appendXMLToDom';
@@ -7,27 +7,25 @@ import appendXMLToDom from '../../utils/appendXMLToDom';
 import './svg-list.scss';
 
 type Props = {
-  icon: string;
-  id: number;
-  title: string;
+  icon: string,
+  id: number,
+  title: string,
 };
 
-class SvgList extends Component<Props> {
+const SvgList = ({ icon, id, title }: Props) => {
 
-  list = React.createRef<HTMLUListElement>();
+  const list = useRef<HTMLUListElement>(null);
 
-  componentDidMount(): void {
-    if (!this.list || !this.list.current) return;
-    appendXMLToDom(this.list.current, this.props.icon, 'icon');
-  }
+  useEffect(() => {
+    if (!list || !list.current) return;
+    appendXMLToDom(list.current, icon, 'icon');
+  }, []);
 
-  render() {
-    return (
-      <ul className="svg-list" id={`${this.props.id}`} ref={this.list}>
-        <li key={0} className="svg-list__title"><h3>{this.props.title}</h3></li>
-      </ul>
-    );
-  }
-}
+  return (
+    <ul className="svg-list" id={`${id}`} ref={list}>
+      <li key={0} className="svg-list__title"><h3>{title}</h3></li>
+    </ul>
+  );
+};
 
 export default SvgList;

@@ -16,19 +16,29 @@ interface Props {
 type SpriteListProps = {
   symbolList: SvgSymbol[],
   id: number,
-  title: string
+  title: string,
+  regExp: RegExp,
 }
 
-const SpriteList = ({ symbolList, id, title }: SpriteListProps) => {
+const SpriteList = ({ symbolList, id, title, regExp }: SpriteListProps) => {
 
-  const spriteItems = symbolList.map((symbol: SvgSymbol, idx) => {
+  const spriteItems = symbolList
+    .filter(symbol => symbol.id.search(regExp) !== -1)
+    .map((symbol, idx) => {
+    /*  Add id field in order not to use array idx*/
     return <SpriteListItem key={idx + 1} symbol={symbol} />;
   });
 
-  return <ul className="sprite-list" id={`${id}`}>
-    <li key={0} className="sprite-list__title"><h3>{title}</h3></li>
-    {spriteItems}
-  </ul>;
+  if (!spriteItems.length) {
+    return null
+  }
+
+  return (
+    <ul className="sprite-list" id={`${id}`}>
+      <li key={0} className="sprite-list__title"><h3>{title}</h3></li>
+      {spriteItems}
+    </ul>
+  )
 };
 
 export default SpriteList;

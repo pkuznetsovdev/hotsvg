@@ -1,5 +1,3 @@
-import { svgTypes } from './index';
-
 export default class SvgSymbol {
   id: string;
   title: string;

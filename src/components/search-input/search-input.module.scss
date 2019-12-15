@@ -1,0 +1,11 @@
+@import "../../styles/variables";
+
+.search {
+    appearance:    none;
+    border:        none;
+    border-bottom: 1px solid $gray;
+    padding:       10px $gap;
+    font-size:     16px;
+    color:         $text;
+    width:         270px;
+}

@@ -6,7 +6,6 @@ import { loadTestSvgFileArr } from '../utils/generate-test-sprites';
 
 import filterNewFilesOnUpload from '../utils/filter-uploaded-files';
 
-
 /*  Generate Sprites  */
 const generateSpriteFilesStarted = (): Action => ({ type: actionTypes.onUpdateSpriteFilesStart });
 
@@ -42,9 +41,17 @@ const loadData = (dispatch: any) => (newFiles: File[]) => {
   generateSvgFileArr(newFiles)
     .then(svgFiles => {
       const newSvgFiles = filterNewFilesOnUpload(svgFiles);
+
+      /*  On upload duplicated files...popup with list of duplicated files coming */
+      if (!newSvgFiles.length) throw Error('All files were uploaded earlier(No duplicated files, please ;))');
+      if (newSvgFiles.length < svgFiles.length) console.log('Some files were uploaded earlier(No duplicated files, please) ;)');
+
       newSvgFiles.forEach(svgFile => {
         const parsedFile = getContentData(svgFile);
+
+        /*  On upload non-valid files...popup with list of non-valid files coming */
         if (!parsedFile) throw Error('Unable to parse the file');
+
         dispatch(generateSpriteFilesSuccess(parsedFile));
       });
     })
