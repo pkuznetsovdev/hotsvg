@@ -1,6 +1,6 @@
-import { SvgIcon, SvgSymbol } from './../interfaces';
+import { SvgIcon, SvgSprite } from './../interfaces';
 
-export type SvgArray = Array<SvgIcon | SvgSymbol>
+export type SvgArray = Array<SvgIcon | SvgSprite>
 
 export interface IGeneratedFiles {
   svgArray: SvgArray,
@@ -9,6 +9,6 @@ export interface IGeneratedFiles {
 }
 
 export default interface State {
-  generatedFiles: IGeneratedFiles
+  generatedFiles: IGeneratedFiles,
 }
 

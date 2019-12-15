@@ -2,19 +2,17 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 /*  Utils  */
-import { State, SvgFile } from '../interfaces';
+import { State, SvgArray, svgTypes} from '../interfaces';
 import { generatedFilesSelector } from '../selectors';
 import { loadTestData } from '../actions';
-import { getContentData } from '../services/sprite-service';
-import appendXMLToDom from '../utils/appenXMLToDom';
+import appendXMLToDom from '../utils/appendXMLToDom';
 
 /*  Components  */
 import SpriteList from '../components/sprite-list';
 import SvgList from '../components/svg-list';
 
-
 interface IProps {
-  uploadedList: SvgFile[],
+  uploadedList: SvgArray,
   loadTestData: () => void
 }
 
@@ -28,17 +26,18 @@ class UploadedSpriteList extends Component<IProps> {
 
   render() {
 
-    const generatedList = this.props.uploadedList.map(({ src, id, title }) => {
+    const generatedList = this.props.uploadedList.map(item => {
+      const {id, title} = item;
 
-      /*todo move to action before upload to store*/
-      const generatedListItem = getContentData(src);
-      if (!generatedListItem) return null;
-
-      if (Array.isArray(generatedListItem)) {
-        appendXMLToDom(document.body, src);
-        return <SpriteList symbolList={generatedListItem} id={id} title={title} key={id} />;
-      } else {
-        return <SvgList svg={generatedListItem} id={id} title={title} key={id} />;
+      switch (item.type) {
+        case svgTypes.sprite: {
+          return <SpriteList symbolList={item.symbols} id={id} title={title} key={id} />;
+        }
+        case svgTypes.icon: {
+          return <SvgList icon={item.icon} id={id} title={title} key={id} />;
+        }
+        default:
+          return null;
       }
     });
 

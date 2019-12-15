@@ -1,39 +1,34 @@
 import { SvgFile } from '../interfaces';
 
-const generateTestSprites = async () => {
-  const testSpriteFiles = await fetchTestSprites().then(res => res);
-  return parseTestSpriteFilesToSpriteListItems(testSpriteFiles);
+const loadTestSvgFileArr = async () => {
+  const testSpriteFiles = await fetchTestFiles().then(res => res);
+  return generateTestSvgFileArr(testSpriteFiles);
 };
 
-const fetchTestSprites = async () => {
+const fetchTestFiles = async () => {
 
   const urlTestSprite = "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/sprites/regular.svg";
   const urlTestSvg = "https://s.cdpn.io/3/kiwi.svg";
 
-  const testSpriteResponse = await fetch(urlTestSprite);
-  const testSprite = await testSpriteResponse.text();
-
-  const testSvgResponse = await fetch(urlTestSvg);
-  const testSvg = await testSvgResponse.text();
-
-  return [testSprite, testSvg];
+  return [
+    await fetch(urlTestSprite).then(res => res.text()),
+    await fetch(urlTestSvg).then(res => res.text())
+  ];
 };
 
-function parseTestSpriteFilesToSpriteListItems(filesArr: string[]): SvgFile[] {
+function generateTestSvgFileArr(filesArr: string[]): SvgFile[] {
   return filesArr.map((file, id) => {
-    const title = 'test-file' + (1 + id);
-    return {
-      src: file,
+    const title = `test-file #${1 + id}`;
+    return new SvgFile(
+      file,
       title,
       id,
-      data: {
-        name: title,
-        lastModified: Date.now()
-      },
-    };
+      title,
+      new Date().getDate(),
+    )
   });
 }
 
 export {
-  generateTestSprites
+  loadTestSvgFileArr
 }

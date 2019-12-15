@@ -1,11 +1,15 @@
 import { SvgFile } from '../interfaces';
+import { generatedFilesSelector } from '../selectors';
 
-const filterNewFilesOnUpload = (spritesArr: SvgFile[], NewFilesArr: SvgFile[]) => {
+import store from '../store';
+
+const filterNewFilesOnUpload = (NewFilesArr: SvgFile[]) => {
+  const uploadedFiles = generatedFilesSelector(store.getState());
   return NewFilesArr.filter(newFile => {
-    return !spritesArr.some(sprite => {
-      return sprite.data.name === newFile.data.name && sprite.data.lastModified === newFile.data.lastModified
+    return !uploadedFiles.some(uploadedFile => {
+      return uploadedFile.data.name === newFile.data.name && uploadedFile.data.lastModified === newFile.data.lastModified
     });
-  })
+  });
 };
 
 export default filterNewFilesOnUpload;

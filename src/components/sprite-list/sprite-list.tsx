@@ -19,16 +19,16 @@ type SpriteListProps = {
   title: string
 }
 
-const SpriteList = ({symbolList, id, title}: SpriteListProps) => {
+const SpriteList = ({ symbolList, id, title }: SpriteListProps) => {
 
-  const spriteItems = symbolList.map( (symbol: SvgSymbol, idx) => {
-    return <SpriteListItem key={idx + 1} symbol={symbol} />
+  const spriteItems = symbolList.map((symbol: SvgSymbol, idx) => {
+    return <SpriteListItem key={idx + 1} symbol={symbol} />;
   });
 
   return <ul className="sprite-list" id={`${id}`}>
     <li key={0} className="sprite-list__title"><h3>{title}</h3></li>
     {spriteItems}
-  </ul>
+  </ul>;
 };
 
 export default SpriteList;

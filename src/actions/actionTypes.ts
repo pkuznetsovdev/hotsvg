@@ -3,6 +3,8 @@ enum actionTypes  {
   onUpdateSpriteFilesSuccess,
   onUpdateSpriteFilesFail,
 
+  updateFilesData,
+
   onDeleteUploadedData,
   onDeleteUploadedFile,
 }

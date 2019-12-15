@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
 
 /*  Utils */
-import appendXMLToDom from '../../utils/appenXMLToDom';
+import appendXMLToDom from '../../utils/appendXMLToDom';
 
 /*  Styles  */
 import './svg-list.scss';
 
 type Props = {
-  svg: string,
-  title: string,
-  id: number,
+  icon: string;
+  id: number;
+  title: string;
 };
 
 class SvgList extends Component<Props> {
@@ -18,7 +18,7 @@ class SvgList extends Component<Props> {
 
   componentDidMount(): void {
     if (!this.list || !this.list.current) return;
-    appendXMLToDom(this.list.current,this.props.svg, 'icon');
+    appendXMLToDom(this.list.current, this.props.icon, 'icon');
   }
 
   render() {

@@ -1,9 +1,8 @@
 import actionTypes from '../actions/actionTypes';
 import { Action, IGeneratedFiles } from '../interfaces';
-import filterNewFilesOnUpload from '../utils/filter-uploaded-files';
 
 const initialState = {
-  svgFileArray: [],
+  svgArray: [],
   loading: false,
   error: null,
 };
@@ -18,11 +17,12 @@ const updateGeneratedFiles = (generatedSpriteFiles: IGeneratedFiles, action: Act
       };
     case actionTypes.onUpdateSpriteFilesSuccess :
       return {
-        svgArray: [...generatedSpriteFiles.svgArray, ...filterNewFilesOnUpload(generatedSpriteFiles.svgArray, action.payload)],
+        svgArray: [...generatedSpriteFiles.svgArray, action.payload],
         loading: false,
         error: null,
       };
     case actionTypes.onUpdateSpriteFilesFail :
+      console.log(action.payload);
       return {
         ...generatedSpriteFiles,
         loading: false,

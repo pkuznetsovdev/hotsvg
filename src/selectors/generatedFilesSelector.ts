@@ -1,6 +1,6 @@
-import { State, SvgFile } from '../interfaces/';
+import { State, SvgArray } from '../interfaces/';
 
-const generatedFilesSelector = ({ generatedFiles: { svgArray } }: State): SvgFile[] => {
+const generatedFilesSelector = ({ generatedFiles: { svgArray } }: State): SvgArray => {
   return svgArray;
 };
 
