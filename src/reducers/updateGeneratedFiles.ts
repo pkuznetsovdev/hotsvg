@@ -1,13 +1,13 @@
 import actionTypes from '../actions/actionTypes';
-import { Action, IGeneratedSprites } from '../interfaces';
+import { Action, IGeneratedFiles } from '../interfaces';
 
 const initialState = {
-    spriteList: [],
-    loading: false,
-    error: null,
+  svgArray: [],
+  loading: false,
+  error: null,
 };
 
-const updateGeneratedSpriteFiles = (generatedSpriteFiles: IGeneratedSprites, action: Action) => {
+const updateGeneratedFiles = (generatedSpriteFiles: IGeneratedFiles, action: Action) => {
   switch (action.type) {
     case actionTypes.onUpdateSpriteFilesStart :
       return {
@@ -17,11 +17,12 @@ const updateGeneratedSpriteFiles = (generatedSpriteFiles: IGeneratedSprites, act
       };
     case actionTypes.onUpdateSpriteFilesSuccess :
       return {
-        spriteList: [...generatedSpriteFiles.spriteList, ...action.payload],
+        svgArray: [...generatedSpriteFiles.svgArray, action.payload],
         loading: false,
         error: null,
       };
     case actionTypes.onUpdateSpriteFilesFail :
+      console.log(action.payload);
       return {
         ...generatedSpriteFiles,
         loading: false,
@@ -34,4 +35,4 @@ const updateGeneratedSpriteFiles = (generatedSpriteFiles: IGeneratedSprites, act
   }
 };
 
-export default updateGeneratedSpriteFiles;
+export default updateGeneratedFiles;

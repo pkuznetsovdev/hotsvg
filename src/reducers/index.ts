@@ -1,24 +1,17 @@
-import { Action, IGeneratedSprites, IUploadedState, State } from '../interfaces';
+import { Action, State } from '../interfaces';
 
-import updateLoadedData from './updateLoadedData';
-import updateGeneratedSpriteFiles from './updateGeneratedSpriteFiles'
+import updateGeneratedFiles from './updateGeneratedFiles';
 
 const initialState: State = {
-  uploadedData: {
-    uploadedFiles: [],
-    loading: false,
-    error: null,
-  },
-  generatedSpriteFiles: {
-    spriteList: [],
+  generatedFiles: {
+    svgArray: [],
     loading: false,
     error: null,
   },
 };
 
 const rootReducer = (state: State = initialState, action: Action): State => ({
-  uploadedData: updateLoadedData(state.uploadedData, action),
-  generatedSpriteFiles: updateGeneratedSpriteFiles(state.generatedSpriteFiles, action),
+  generatedFiles: updateGeneratedFiles(state.generatedFiles, action),
 });
 
 export default rootReducer;

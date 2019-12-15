@@ -1,8 +1,7 @@
 import React from 'react';
 
 /*  Utils */
-import { ISpriteList, ISymbol } from '../../interfaces';
-import { getSVGSymbols } from '../../services/sprite-service';
+import { SvgFile, SvgSymbol } from '../../interfaces';
 
 /*  Components  */
 import SpriteListItem from '../sprite-list-item';
@@ -11,45 +10,35 @@ import SpriteListItem from '../sprite-list-item';
 import './sprite-list.scss';
 
 interface Props {
-  spriteArray: ISpriteList
+  spriteList: SvgFile
 }
 
-const SpriteList = ({spriteArray}: Props) => {
-  let listCounter = 0;
+type SpriteListProps = {
+  symbolList: SvgSymbol[],
+  id: number,
+  title: string,
+  regExp: RegExp,
+}
 
-  const spriteLists = spriteArray.map( ({title, spriteFile}) => {
-    const symbolList = getSVGSymbols(spriteFile);
-    let spriteItems;
+const SpriteList = ({ symbolList, id, title, regExp }: SpriteListProps) => {
 
-    /*todo bad code*/
-    const parser = new DOMParser();
-    const spriteElement = parser.parseFromString(spriteFile, "text/xml");
-    spriteElement.documentElement.style.display = 'none';
-    document.body.insertAdjacentElement('afterbegin', spriteElement.documentElement);
-
-    /*todo bad code*/
-    if (Array.isArray(symbolList)) {
-      let itemCounter = 0;
-      spriteItems = symbolList.map( (symbol: ISymbol) => {
-        return <SpriteListItem key={itemCounter++} symbol={symbol} />
-      });
-    } else {
-      spriteItems = <li>{symbolList.svg}</li>;
-    }
-
-    return (
-      <ul className="sprite-list" key={listCounter++}>
-        <li key={0} className="sprite-list__title"><h3>{title}</h3></li>
-        {spriteItems}
-      </ul>
-    )
+  const spriteItems = symbolList
+    .filter(symbol => symbol.id.search(regExp) !== -1)
+    .map((symbol, idx) => {
+    /*  Add id field in order not to use array idx*/
+    return <SpriteListItem key={idx + 1} symbol={symbol} />;
   });
 
+  if (!spriteItems.length) {
+    return null
+  }
+
   return (
-    <section className="">
-      {spriteLists}
-    </section>
-  );
+    <ul className="sprite-list" id={`${id}`}>
+      <li key={0} className="sprite-list__title"><h3>{title}</h3></li>
+      {spriteItems}
+    </ul>
+  )
 };
 
 export default SpriteList;

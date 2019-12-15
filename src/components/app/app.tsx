@@ -1,4 +1,4 @@
-import React from 'react';
+import React  from 'react';
 
 /*  Styles  */
 import './app.scss';
@@ -6,15 +6,20 @@ import './app.scss';
 /*  Components  */
 import Header from '../header';
 import UploadedSpriteList from '../../containers/uploaded-sprite-list';
-import SpriteListNav from '../sprite-list-navigation'
+import SpriteListNavigation from '../sprite-list-navigation';
 
-const App: React.FC = () => (
+const App = () => (
   <div className="app">
     <Header />
 
-    <main className="container">
-      <SpriteListNav />
-      <UploadedSpriteList />
+    <main className="main">
+      <aside className="sidebar">
+        <SpriteListNavigation />
+      </aside>
+
+      <section className="content-wrapper">
+        <UploadedSpriteList />
+      </section>
     </main>
   </div>
 );

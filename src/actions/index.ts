@@ -1,24 +1,15 @@
 import actionTypes from './actionTypes';
-import { Action, ISpriteList, IUploadedFiles } from '../interfaces';
-import { extractDataFromSprite } from '../services/sprite-service';
 
-/*  Upload  */
-const uploadStarted = (): Action => ({ type: actionTypes.onUploadStart });
+import { Action, SvgIcon, SvgSprite } from '../interfaces';
+import { generateSvgFileArr, getContentData } from '../services/sprite-service';
+import { loadTestSvgFileArr } from '../utils/generate-test-sprites';
 
-const uploadSuccess = (data: IUploadedFiles): Action => ({
-  type: actionTypes.onUploadSuccess,
-  payload: data,
-});
-
-const uploadFail = (error: string): Action => ({
-  type: actionTypes.onUploadFail,
-  payload: error,
-});
+import filterNewFilesOnUpload from '../utils/filter-uploaded-files';
 
 /*  Generate Sprites  */
 const generateSpriteFilesStarted = (): Action => ({ type: actionTypes.onUpdateSpriteFilesStart });
 
-const generateSpriteFilesSuccess = (data: ISpriteList): Action => ({
+const generateSpriteFilesSuccess = (data: SvgIcon | SvgSprite): Action => ({
   type: actionTypes.onUpdateSpriteFilesSuccess,
   payload: data,
 });
@@ -30,24 +21,45 @@ const generateSpriteFilesFail = (error: string): Action => ({
 
 /*  Delete Uploaded Data  */
 const deleteUploadedData = (): Action => ({
-  type: actionTypes.onDeleteUploadedData
+  type: actionTypes.onDeleteUploadedData,
 });
 
-const loadData = (newFiles: IUploadedFiles) => (dispatch: any) => {
-  dispatch(uploadStarted());
+const loadTestData = (dispatch: any) => () => {
+  dispatch(generateSpriteFilesStarted());
+  loadTestSvgFileArr()
+    .then(testFiles =>
+      testFiles.forEach(testFile => {
+        const parsedFile = getContentData(testFile);
+        if (!parsedFile) throw Error('Unable to parse the file');
+        dispatch(generateSpriteFilesSuccess(parsedFile));
+      })
+    );
+};
 
-  if (newFiles) {
-    dispatch(uploadSuccess(newFiles));
-    dispatch(generateSpriteFilesStarted());
-    extractDataFromSprite(newFiles)
-      .then(spriteFiles => dispatch(generateSpriteFilesSuccess(spriteFiles)))
-      .catch(error => dispatch(generateSpriteFilesFail(error)));
-  } else {
-    uploadFail('No new files, common..');
-  }
+const loadData = (dispatch: any) => (newFiles: File[]) => {
+  dispatch(generateSpriteFilesStarted());
+  generateSvgFileArr(newFiles)
+    .then(svgFiles => {
+      const newSvgFiles = filterNewFilesOnUpload(svgFiles);
+
+      /*  On upload duplicated files...popup with list of duplicated files coming */
+      if (!newSvgFiles.length) throw Error('All files were uploaded earlier(No duplicated files, please ;))');
+      if (newSvgFiles.length < svgFiles.length) console.log('Some files were uploaded earlier(No duplicated files, please) ;)');
+
+      newSvgFiles.forEach(svgFile => {
+        const parsedFile = getContentData(svgFile);
+
+        /*  On upload non-valid files...popup with list of non-valid files coming */
+        if (!parsedFile) throw Error('Unable to parse the file');
+
+        dispatch(generateSpriteFilesSuccess(parsedFile));
+      });
+    })
+    .catch(error => dispatch(generateSpriteFilesFail(error)));
 };
 
 export {
   loadData,
-  deleteUploadedData
+  loadTestData,
+  deleteUploadedData,
 };

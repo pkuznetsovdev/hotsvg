@@ -1,0 +1,17 @@
+@import '../../styles/variables';
+
+.svg-list {
+    display: flex;
+    flex-wrap: wrap;
+
+    &__title {
+        width:         100%;
+        border-bottom: 1px solid $gray;
+        margin:        0;
+        padding-left: $gap;
+    }
+
+    .icon {
+        margin: 1.5em 0;
+    }
+}

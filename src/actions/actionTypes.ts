@@ -1,11 +1,9 @@
 enum actionTypes  {
-  onUploadStart,
-  onUploadSuccess,
-  onUploadFail,
-
   onUpdateSpriteFilesStart,
   onUpdateSpriteFilesSuccess,
   onUpdateSpriteFilesFail,
+
+  updateFilesData,
 
   onDeleteUploadedData,
   onDeleteUploadedFile,

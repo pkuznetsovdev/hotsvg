@@ -1,28 +1,61 @@
-import React from 'react';
-import { IUploadedFiles } from '../../interfaces';
-import { onUploadData } from '../../services/loader-service';
+import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
 
-const SpriteInput = () => {
+/*  Utils */
+import { loadData } from '../../actions';
+
+type Props = {
+  loadData: (a: File[]) => void
+};
+
+const SpriteInput = (props: Props) => {
 
   const onChangeHandler = (e: React.ChangeEvent) => {
     const { files } = e.target as HTMLInputElement;
-    if (!files) return;
-    let newFiles: IUploadedFiles = [];
-
-    for (let i = 0, filesLength = files.length; i < filesLength; i++) {
-      newFiles.push(files[i]);
+    if (files) {
+      props.loadData(Array.from(files));
     }
+  };
 
-    onUploadData(newFiles);
+  useEffect(() => {
+    window.addEventListener('drop', dropHandler, false);
+    window.addEventListener('dragover', dragHandler, false);
+
+    return () => {
+      window.removeEventListener('drop', dropHandler, false);
+      window.removeEventListener('dragover', dragHandler, false);
+    };
+  }, []);
+
+  const dragHandler = (e: DragEvent) => {
+    e.preventDefault();
+  };
+
+  const dropHandler = (e: DragEvent) => {
+    e.preventDefault();
+
+    if (e.dataTransfer && e.dataTransfer.files) {
+      /*  file check - to remove from the component */
+      props.loadData(Array.from(e.dataTransfer.files).filter(file => file.type === 'image/svg+xml'));
+    }
   };
 
   return (
     <label className="btn-solid header__input">
       <span>Pick or drop</span>
-      <input type="file" multiple hidden onChange={onChangeHandler} onClick={({target}) => (target as HTMLInputElement).value = ''}
+      <input type="file"
+             accept=".svg"
+             multiple
+             hidden
+             onChange={onChangeHandler}
+             onClick={({ target }) => (target as HTMLInputElement).value = ''}
       />
     </label>
   );
 };
 
-export default SpriteInput;
+const mapDispatchToProps = (dispatch: any) => ({
+  loadData: loadData(dispatch),
+});
+
+export default connect(null, mapDispatchToProps)(SpriteInput);

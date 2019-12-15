@@ -1,8 +1,7 @@
-import { State, ISpriteList } from '../interfaces/';
+import { State, SvgArray } from '../interfaces/';
 
-const generatedFilesSelector = ({ generatedSpriteFiles: { spriteList } }: State): ISpriteList => {
-  console.log(spriteList);
-  return spriteList;
+const generatedFilesSelector = ({ generatedFiles: { svgArray } }: State): SvgArray => {
+  return svgArray;
 };
 
 export default generatedFilesSelector;

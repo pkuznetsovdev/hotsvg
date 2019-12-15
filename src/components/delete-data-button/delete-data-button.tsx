@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 /*  Utils */
-import { ISpriteList, State } from '../../interfaces';
+import { State, SvgArray } from '../../interfaces';
 import { generatedFilesSelector } from '../../selectors';
 import { deleteUploadedData } from '../../actions';
 
@@ -10,7 +10,7 @@ import { deleteUploadedData } from '../../actions';
 import './delete-data-button.scss';
 
 type Props = {
-  spriteList: ISpriteList,
+  spriteList: SvgArray,
   onDeleteData: any
 }
 

@@ -1,24 +1,31 @@
-import State, {IUploadedState, IUploadedFiles, IGeneratedSprites} from './state';
+// @ts-nocheck
+import State, { IGeneratedFiles, IUploadedFilesData, SvgArray } from './state';
 import Action from './action';
-import {ISpriteListItem, ISymbol, ISpriteList, ISvg} from './sprite';
+import SvgSymbol from './SvgSymbol';
+import SvgFile from './SvgFile';
+import SvgIcon from './SvgIcon';
+import svgTypes from './svgTypes';
+
+type SvgSprite = {
+  type: svgTypes.sprite,
+  id: number,
+  title: string,
+  data: {
+    name: string,
+    lastModified: number
+  };
+  symbols: SvgSymbol[]
+}
 
 export {
-// @ts-ignore
   State,
-// @ts-ignore
-  IUploadedState,
-// @ts-ignore
-  IGeneratedSprites,
-// @ts-ignore
+  IGeneratedFiles,
+  IUploadedFilesData,
+  SvgArray,
   Action,
-// @ts-ignore
-  IUploadedFiles,
-// @ts-ignore
-  ISpriteList,
-// @ts-ignore
-  ISpriteListItem,
-// @ts-ignore
-  ISymbol,
-// @ts-ignore
-  ISvg,
-}
+  SvgSymbol,
+  SvgSprite,
+  SvgFile,
+  SvgIcon,
+  svgTypes,
+};
