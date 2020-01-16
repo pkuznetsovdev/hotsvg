@@ -1,12 +1,14 @@
 enum actionTypes  {
-  onUpdateSpriteFilesStart,
-  onUpdateSpriteFilesSuccess,
-  onUpdateSpriteFilesFail,
+  updateSpriteFilesStart,
+  updateSpriteFilesSuccess,
+  updateSpriteFilesFail,
 
-  updateFilesData,
+  updateRejectedFiles,
 
-  onDeleteUploadedData,
-  onDeleteUploadedFile,
+  /*updateFilesData,*/
+
+  deleteUploadedData,
+  deleteUploadedFile,
 }
 
 export default actionTypes;

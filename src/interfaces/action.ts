@@ -1,14 +1,16 @@
 import actionTypes from '../actions/actionTypes';
-import { IUploadedFilesData, SvgIcon, SvgSprite } from './index';
+import {RejectedFile, SvgIcon, SvgSprite} from './index';
 
 type Action =
-  { type: actionTypes.onUpdateSpriteFilesStart } |
-  { type: actionTypes.onUpdateSpriteFilesSuccess, payload: SvgIcon | SvgSprite } |
-  { type: actionTypes.onUpdateSpriteFilesFail, payload: string | null } |
+  { type: actionTypes.updateSpriteFilesStart } |
+  { type: actionTypes.updateSpriteFilesSuccess, payload: (SvgIcon | SvgSprite)[] } |
+  { type: actionTypes.updateSpriteFilesFail, payload: string } |
 
-  { type: actionTypes.updateFilesData, payload: IUploadedFilesData } |
+  { type: actionTypes.updateRejectedFiles, payload: RejectedFile[] } |
 
-  { type: actionTypes.onDeleteUploadedData } |
-  { type: actionTypes.onDeleteUploadedFile, payload: number};
+  /*{ type: actionTypes.updateFilesData, payload: IUploadedFilesData } |*/
+
+  { type: actionTypes.deleteUploadedData } |
+  { type: actionTypes.deleteUploadedFile, payload: number};
 
 export default Action;

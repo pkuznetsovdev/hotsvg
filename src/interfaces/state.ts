@@ -1,14 +1,15 @@
-import { SvgIcon, SvgSprite } from './../interfaces';
+import { SvgIcon, SvgSprite, RejectedFile } from './../interfaces';
 
 export type SvgArray = Array<SvgIcon | SvgSprite>
 
-export interface IGeneratedFiles {
+export type GeneratedFiles = {
   svgArray: SvgArray,
   loading: boolean,
-  error: string | null,
+  error: string,
 }
 
 export default interface State {
-  generatedFiles: IGeneratedFiles,
+  generatedFiles: GeneratedFiles,
+  rejectedFiles: RejectedFile[],
 }
 

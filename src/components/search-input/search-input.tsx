@@ -8,6 +8,7 @@ import styles from './search-input.module.scss';
 import { loadData } from '../../actions';
 import { State } from '../../interfaces';
 import { generatedFilesSelector } from '../../selectors';
+import {Dispatch} from "redux";
 
 type Props = {
   loadData: (a: File[]) => void,
@@ -36,7 +37,7 @@ const mapStateToProps = (state: State) => ({
   spriteList: generatedFilesSelector(state),
 });
 
-const mapDispatchToProps = (dispatch: any) => ({
+const mapDispatchToProps = (dispatch: Dispatch) => ({
   loadData: loadData(dispatch),
 });
 

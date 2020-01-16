@@ -10,6 +10,7 @@ import { loadTestData } from '../actions';
 import SpriteList from '../components/sprite-list';
 import SvgList from '../components/svg-list';
 import SearchInput from '../components/search-input';
+import {Dispatch} from "redux";
 
 type Props = {
   uploadedList: SvgArray,
@@ -65,7 +66,7 @@ const mapStateToProps = (state: State) => ({
   uploadedList: generatedFilesSelector(state),
 });
 
-const mapDispatchToProps = (dispatch: any) => ({
+const mapDispatchToProps = (dispatch: Dispatch) => ({
   loadTestData: loadTestData(dispatch),
 });
 

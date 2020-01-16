@@ -1,10 +1,11 @@
 // @ts-nocheck
-import State, { IGeneratedFiles, IUploadedFilesData, SvgArray } from './state';
+import State, { GeneratedFiles, SvgArray } from './state';
 import Action from './action';
 import SvgSymbol from './SvgSymbol';
 import SvgFile from './SvgFile';
 import SvgIcon from './SvgIcon';
 import svgTypes from './svgTypes';
+import RejectedFile, {ErrorTypes} from './errorTypes';
 
 type SvgSprite = {
   type: svgTypes.sprite,
@@ -19,8 +20,8 @@ type SvgSprite = {
 
 export {
   State,
-  IGeneratedFiles,
-  IUploadedFilesData,
+  GeneratedFiles,
+  //IUploadedFilesData,
   SvgArray,
   Action,
   SvgSymbol,
@@ -28,4 +29,6 @@ export {
   SvgFile,
   SvgIcon,
   svgTypes,
+  RejectedFile,
+  ErrorTypes,
 };

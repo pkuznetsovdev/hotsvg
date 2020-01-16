@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 
 /*  Utils */
 import { loadData } from '../../actions';
+import {Dispatch} from "redux";
 
 type Props = {
   loadData: (a: File[]) => void
@@ -54,7 +55,7 @@ const SpriteInput = (props: Props) => {
   );
 };
 
-const mapDispatchToProps = (dispatch: any) => ({
+const mapDispatchToProps = (dispatch: Dispatch) => ({
   loadData: loadData(dispatch),
 });
 
