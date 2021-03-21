@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/hotsvg/static/css/main.e2113972.chunk.css",
-    "main.js": "/hotsvg/static/js/main.507607c6.chunk.js",
-    "main.js.map": "/hotsvg/static/js/main.507607c6.chunk.js.map",
+    "main.js": "/hotsvg/static/js/main.bc21461f.chunk.js",
+    "main.js.map": "/hotsvg/static/js/main.bc21461f.chunk.js.map",
     "runtime-main.js": "/hotsvg/static/js/runtime-main.ef8c8229.js",
     "runtime-main.js.map": "/hotsvg/static/js/runtime-main.ef8c8229.js.map",
     "static/js/2.613e67dc.chunk.js": "/hotsvg/static/js/2.613e67dc.chunk.js",
     "static/js/2.613e67dc.chunk.js.map": "/hotsvg/static/js/2.613e67dc.chunk.js.map",
     "index.html": "/hotsvg/index.html",
-    "precache-manifest.65acb0de37fb7ef23eaab649d72275c6.js": "/hotsvg/precache-manifest.65acb0de37fb7ef23eaab649d72275c6.js",
+    "precache-manifest.8cec508c87e57282c4e6091a69e341fa.js": "/hotsvg/precache-manifest.8cec508c87e57282c4e6091a69e341fa.js",
     "service-worker.js": "/hotsvg/service-worker.js",
     "static/css/main.e2113972.chunk.css.map": "/hotsvg/static/css/main.e2113972.chunk.css.map"
   },
@@ -16,6 +16,6 @@
     "static/js/runtime-main.ef8c8229.js",
     "static/js/2.613e67dc.chunk.js",
     "static/css/main.e2113972.chunk.css",
-    "static/js/main.507607c6.chunk.js"
+    "static/js/main.bc21461f.chunk.js"
   ]
 }
