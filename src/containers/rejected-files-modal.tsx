@@ -12,8 +12,8 @@ type Props =  {
 }
 
 class RejectedFilesModal extends Component<Props> {
-
     render() {
+        return null;
         if ( !this.props.rejectedFiles.length) {
             return null;
         }

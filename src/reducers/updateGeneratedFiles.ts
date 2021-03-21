@@ -17,7 +17,6 @@ const updateGeneratedFiles = (generatedSpriteFiles: GeneratedFiles, action: Acti
         error: '',
       };
     case actionTypes.updateSpriteFilesFail :
-      console.log(action.payload);
       return {
         ...generatedSpriteFiles,
         loading: false,
